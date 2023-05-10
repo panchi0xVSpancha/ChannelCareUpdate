@@ -71,20 +71,30 @@
             <span class="menu-text">Dashboard</span>
 
           </a>
-          <?php }else { ?>
+          <?php }else if ($_SESSION["type"]=="patient") { ?>
             <a href="patient-dashboard.php">
             <i class="menu-icon zmdi zmdi-view-dashboard zmdi-hc-lg"></i>
             <span class="menu-text">Dashboard</span>
 
           </a>
-          <?php }?>
+          <?php } else {?>
+            <a href="admin-dashboard.php">
+            <i class="menu-icon zmdi zmdi-view-dashboard zmdi-hc-lg"></i>
+            <span class="menu-text">Dashboard</span>
+
+          </a>
+          <?php } ?>
 
         </li>
 
         <li class="has-submenu">
           <a href="javascript:void(0)" class="submenu-toggle">
             <i class="menu-icon zmdi zmdi-pages zmdi-hc-lg"></i>
-            <span class="menu-text">Appointment</span>
+            <?php if ($_SESSION["type"]=="admin") {?>
+            <span class="menu-text">Users</span>
+            <?php } else {?>
+              <span class="menu-text">Appointment</span>
+              <?php } ?>
             <i class="menu-caret zmdi zmdi-hc-sm zmdi-chevron-right"></i>
           </a>
           <?php if ($_SESSION["type"]=="doctor") {?>
@@ -95,17 +105,38 @@
             <li><a href="all-appointment.php"><span class="menu-text">All Appointment</span></a></li>
 
           </ul>
-          <?php }else { ?>
+          <?php }else if ($_SESSION["type"]=="patient") { ?>
             <ul class="submenu">
             <li><a href="patient-pending-appointment.php"><span class="menu-text">Pending Appointment</span></a></li>
             <li><a href="patient-approved-appointment.php"><span class="menu-text">Approved Appointments</span></a></li>
             <li><a href="patient-history-appointment.php"><span class="menu-text">History Appointments</span></a></li>
             
           </ul>
+          <?php } else {?>
+            <ul class="submenu">
+            <li><a href="all-patients.php"><span class="menu-text">Patients</span></a></li>
+            <li><a href="all-doctors.php"><span class="menu-text">Doctors</span></a></li>
+            
+          </ul>
            
           <?php }?>
         
         </li>
+
+        <?php if ($_SESSION["type"]=="admin") {?>
+        <li>
+        <a href="javascript:void(0)" class="submenu-toggle">
+            <i class="menu-icon zmdi zmdi-layers zmdi-hc-lg"></i>
+            <span class="menu-text">Requests</span>
+            <i class="menu-caret zmdi zmdi-hc-sm zmdi-chevron-right"></i>
+          </a>
+          <ul class="submenu">
+            <li><a href="doctor-registration-requests.php"><span class="menu-text">Doctors' Reg Requests</span></a></li>
+            <li><a href="doctor-reg-deny.php"><span class="menu-text">Doctors' Deny Requests</span></a></li>
+            
+          </ul>
+        </li>
+        <?php }?>
 
         <li>
           <a href="search.php">

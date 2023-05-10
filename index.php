@@ -152,7 +152,6 @@ if (isset($_POST['submit'])) {
         <section class="section-padding" id="booking">
             <div class="container">
                 <div class="row">
-
                     <div class="col-lg-8 col-12 mx-auto">
                         <div class="booking-form">
 
@@ -161,7 +160,10 @@ if (isset($_POST['submit'])) {
                             <form role="form" method="post">
                                 <div class="row">
                                     <div class="col-lg-6 col-12">
-                                        <input type="text" name="name" id="name" class="form-control" placeholder="Full name" required='true'>
+                                        <input type="text" name="name" id="name" class="form-control" placeholder="First name" required='true'>
+                                    </div>
+                                    <div class="col-lg-6 col-12">
+                                        <input type="text" name="name" id="name" class="form-control" placeholder="Last name" required='true'>
                                     </div>
 
                                     <div class="col-lg-6 col-12">
@@ -172,50 +174,50 @@ if (isset($_POST['submit'])) {
                                         <input type="telephone" name="phone" id="phone" class="form-control" placeholder="Enter Phone Number" maxlength="10">
                                     </div>
 
-                                    <div class="col-lg-6 col-12">
-                                        <input type="date" name="date" id="date" value="" class="form-control">
-
-                                    </div>
-
-                                    <div class="col-lg-6 col-12">
-                                        <input type="time" name="time" id="time" value="" class="form-control">
-
-                                    </div>
-
-                                    <div class="col-lg-6 col-12">
-                                        <select onChange="getdoctors(this.value);" name="specialization" id="specialization" class="form-control" required>
-                                            <option value="">Select specialization</option>
-                                            <option value="heart">heart</option>
+                                    <div class="col-12">
+                                        <select onChange="getdoctors(this.value);" name="Region" id="Region" class="form-control" required>
+                                            <option value="">Select Region</option>
+                                            <option value="Silesian_Region">Silesian Region</option>
+                                            <option value="Pardubice_Region">Pardubice Region</option>
+                                            <option value="Ústí_Region">Ústí Region</option>
+                                            <option value="Vysočina_Region">Vysočina Region</option>
+                                            <option value="South_Bohemian_Region">South Bohemian Region</option>
+                                            <option value="Zlín_Region">Zlín Region</option>
                                         </select>
                                     </div>
 
-
-                                    <div class="col-lg-6 col-12">
+                                    <div class="col-12">
                                         <select name="doctorlist" id="doctorlist" class="form-control">
                                             <option value="">Select Doctor</option>
                                         </select>
                                     </div>
 
+                                    <div class="col-lg-6 col-12">
+                                        <input type="date" name="date" id="date" value="" class="form-control">
 
+                                    </div>
 
+                                    <div class="col-lg-6 col-12 mt-3">
+                                        <div class="alert alert-info" role="alert">
+                                            2pm <span class="smallfont">&nbsp;&nbsp; time might vary depend on appointments before you.</span>
+                                        </div>
+                                    </div>
+                                    
                                     <div class="col-12">
                                         <textarea class="form-control" rows="5" id="message" name="message" placeholder="Additional Message"></textarea>
                                     </div>
 
                                     <div class="col-lg-3 col-md-4 col-6 mx-auto">
-                                        <?php //echo $_SESSION
-                                        ?>
                                         <button type="submit" class="form-control" name="submit" id="submit-button">Book Now</button>
                                     </div>
                                 </div>
                             </form>
-
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
+
     </main>
     <?php include_once('includes/footer.php'); ?>
     <!-- JAVASCRIPT FILES -->

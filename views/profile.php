@@ -53,45 +53,130 @@ if (!isset($_SESSION['email'])) {
 
                 <form class="form-horizontal" method="post">
                   <div class="form-group">
-                    <label for="exampleTextInput1" class="col-sm-3 control-label">Employee ID:</label>
+                    <label for="exampleTextInput1" class="col-sm-3 control-label">Name : </label>
                     <div class="col-sm-9">
                       <input id="fname" type="text" class="form-control" placeholder="Full Name" name="fname" required="true" value="<?php echo $row->FullName; ?>">
                     </div>
                   </div>
 
-
-                  <div class="form-group">
-                    <label for="email2" class="col-sm-3 control-label">Email:</label>
-                    <div class="col-sm-9">
-                      <input type="email" class="form-control" id="email" name="email" value="val" required='true'>
-                    </div>
-                  </div>
                   <div class="form-group">
                     <label for="email2" class="col-sm-3 control-label">Contact Number:</label>
                     <div class="col-sm-9">
                       <input type="text" class="form-control" id="email2" name="mobilenumber" value="val" required='true' maxlength='10'>
                     </div>
                   </div>
+
                   <div class="form-group">
                     <label for="email2" class="col-sm-3 control-label">Specialization:</label>
                     <div class="col-sm-9">
-                      <select class="form-control" name="specializationid">
-                        <option value="val">val</option>
-                        <option value="val">val</option>
+                      <select onChange="getdoctors(this.value);" name="specialization" id="specialization" class="form-control" required>
+                        <option value="">Select specialization</option>
+                        <option value="heart">heart</option>
+                        <option value="Orthopedics">Orthopedics</option>
+                        <option value="Internal Medicine">Internal Medicine</option>
+                        <option value="Dermatology">Dermatology</option>
+                        <option value="Pediatrics">Pediatrics</option>
+                        <option value="ENT">ENT</option>
+                        <option value="Anesthesia">Anesthesia</option>
+                        <option value="Pathology">Pathology</option>
+                        <option value="Chest Medicine">Chest Medicine</option>
+                        <option value="Family Medicine">Family Medicine</option>
+
+
+
+                        <!-- <option value="<?php // echo $row['ID'];
+                                            ?>"><?php //echo $row['Specialization'];
+                                                ?></option> -->
+                        <!--- Fetching States--->
                       </select>
                     </div>
                   </div>
+
                   <div class="form-group">
                     <label for="email2" class="col-sm-3 control-label">Regsitration Date:</label>
                     <div class="col-sm-9">
                       <input type="text" class="form-control" id="email2" name="" value="val" readonly="true">
                     </div>
                   </div>
+
                   <div class="row">
                     <div class="col-sm-9 col-sm-offset-3">
                       <button type="submit" class="btn btn-success" name="submit">Update</button>
+
                     </div>
                   </div>
+                  <hr />
+                  <div><h3 class="widget-title">Available Dates</h3></div>
+                  <div class="row">
+                    <div class="col-sm-6 col-md-3">
+                    <select onChange="" name="days" id="days" class="form-control" required>
+                        <option value="">Select day</option>
+                        <option value="Sunday">Sunday</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                    <input type="time" name="time" id="time" value="" class="form-control" placeholder="Start Time">
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                    <input type="number" name="number" id="number" value="" class="form-control" placeholder="Available Time Period">
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                    <button onclick="" class="btn btn-info" name="AddAvailableDates">Add Available Dates</button>
+                    </div>
+                  </div>
+                  <hr />
+                  <div>
+                  
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-hover js-basic-example dataTable table-custom">
+                      <thead>
+                        <tr>
+                          <th>D.No</th>
+                          <th>Available Day</th>
+                          <th>Starting Time</th>
+                          <th>Available Time Period</th>
+                          <th>Action</th>
+
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr>
+                          <td>
+                            bla
+                          </td>
+                          bla
+
+                          <td>
+                            bla
+                          </td>
+                          bla
+                          <td>
+                            bla
+                          </td>
+                          bla
+                          <td>
+                            bla>
+                          </td>
+
+                          <td>
+                            <a href="" class="btn btn-danger">Remove</a>
+                          </td>
+
+                        </tr>
+                      </tbody>
+
+                    </table>
+                  </div>
+                  </div>
+                  
+
                 </form>
               </div><!-- .widget-body -->
             </div><!-- .widget -->

@@ -702,7 +702,7 @@ strong {
   BOOKING FORM            
 -----------------------------------------*/
 
-.booking-form .form-control {
+.doctor_search .form-control {
   background: transparent;
   border-radius: 0;
   border: 0;
@@ -715,7 +715,7 @@ strong {
   transition: all 0.3s;
 }
 
-.booking-form #submit-button {
+.booking-form #submit-button , .doctor_search #submit-button {
   background: var(--dark-color);
   border-bottom: 0;
   font-weight: var(--font-weight-semibold);
@@ -724,10 +724,9 @@ strong {
   margin-top: 35px;
 }
 
-.booking-form #submit-button:hover {
+.booking-form #submit-button:hover, .doctor_search #submit-button:hover {
   background: var(--primary-color);
 }
-
 /*---------------------------------------
   FOOTER              
 -----------------------------------------*/
@@ -913,4 +912,14 @@ strong {
   .timeline::before {
     left: 42px;
   }
+}
+
+.smallfont{
+  font-size: x-small;
+}
+
+.username{
+  padding-left: 10px;
+  justify-content: center;
+  align-self: center;
 }

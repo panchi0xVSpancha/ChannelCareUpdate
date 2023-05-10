@@ -1,7 +1,7 @@
 <?php
 session_start();
 //error_reporting(0);
-include('doctor/includes/dbconnection.php');
+include('views/includes/dbconnection.php');
     if(isset($_POST['submit']))
   {
  $name=$_POST['name'];
@@ -65,18 +65,18 @@ echo "<script>window.location.href ='index.php'</script>";
 
         <link href="css/templatemo-medic-care.css" rel="stylesheet">
         <script>
-function getdoctors(val) {
-  //  alert(val);
-$.ajax({
+// function getdoctors(val) {
+//   //  alert(val);
+// $.ajax({
 
-type: "POST",
-url: "get_doctors.php",
-data:'sp_id='+val,
-success: function(data){
-$("#doctorlist").html(data);
-}
-});
-}
+// type: "POST",
+// url: "get_doctors.php",
+// data:'sp_id='+val,
+// success: function(data){
+// $("#doctorlist").html(data);
+// }
+// });
+// }
 </script>
     </head>
     
@@ -118,22 +118,9 @@ $("#doctorlist").html(data);
                     <div class="row">
 
                         <div class="col-lg-6 col-md-6 col-12">
-                            <?php
-$sql="SELECT * from tblpage where PageType='aboutus'";
-$query = $dbh -> prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
+                            <h2 class="mb-lg-3 mb-3">About Us</h2>
 
-$cnt=1;
-if($query->rowCount() > 0)
-{
-foreach($results as $row)
-{               ?>
-                            <h2 class="mb-lg-3 mb-3"><?php  echo htmlentities($row->PageTitle);?></h2>
-
-                            <p><?php  echo ($row->PageDescription);?>.</p>
-
-                           <?php $cnt=$cnt+1;}} ?>
+                            <p><div><font color="#202124" face="arial, sans-serif"><b>Our mission declares our purpose of existence as a company and our objectives.</b></font></div><div><font color="#202124" face="arial, sans-serif"><b><br></b></font></div><div><font color="#202124" face="arial, sans-serif"><b>To give every customer much more than what he/she asks for in terms of quality, selection, value for money and customer service, by understanding local tastes and preferences and innovating constantly to eventually provide an unmatched experience in jewellery shopping.</b></font></div></p>
                         </div>
 
                         <div class="col-lg-4 col-md-5 col-12 mx-auto">
@@ -202,15 +189,9 @@ foreach($results as $row)
     <div class="col-lg-6 col-12">
 <select onChange="getdoctors(this.value);"  name="specialization" id="specialization" class="form-control" required>
 <option value="">Select specialization</option>
+<option value="heart">heart</option>
+<!-- <option value="<?php // echo $row['ID'];?>"><?php //echo $row['Specialization'];?></option> -->
 <!--- Fetching States--->
-<?php
-$sql="SELECT * FROM tblspecialization";
-$stmt=$dbh->query($sql);
-$stmt->setFetchMode(PDO::FETCH_ASSOC);
-while($row =$stmt->fetch()) { 
-  ?>
-<option value="<?php echo $row['ID'];?>"><?php echo $row['Specialization'];?></option>
-<?php }?>
 </select>
 </div>
 
@@ -228,6 +209,7 @@ while($row =$stmt->fetch()) {
                                         </div>
 
                                         <div class="col-lg-3 col-md-4 col-6 mx-auto">
+                                        <?php //echo $_SESSION?>
                                             <button type="submit" class="form-control" name="submit" id="submit-button">Book Now</button>
                                         </div>
                                     </div>

@@ -38,7 +38,7 @@
                                 <a class="nav-link" href="#contact">Contact</a>
                             </li>
                              <li class="nav-item active">
-                                <a class="nav-link" href="doctor/login.php">Doctor</a>
+                                <a class="nav-link" href="views/login.php">Login</a>
                             </li>
                         </ul>
                     </div>

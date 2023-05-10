@@ -54,7 +54,7 @@ if (isset($_POST['login'])) {
           header('Location:../views/dashboard.php');
         } elseif ($record['type'] == "admin") {
           $_SESSION['admin_id'] = $user_id['admin_id'];
-          header('Location:../index.php?admin');
+          header('Location:../views/admin-dashboard.php');
         }
 
       } else {

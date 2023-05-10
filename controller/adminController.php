@@ -22,6 +22,27 @@ function userDetails($connection,$type, $id)
     return $data;
 }
 
+//doctor registration accept by admin
+if (isset($_GET['doctorRequestAccept_id'])) {
+  $request_id = $_GET['doctorRequestAccept_id'];
+  $result = adminModel::confirmOrDenyDoctorRegistration($request_id, 1,$connection);
+  if ($result) {
+      header('Location:../views/all-doctors.php');
+  }
+
+}
+
+//doctor registration deny by admin
+if (isset($_GET['doctorRequestCancel_id'])) {
+  $request_id = $_GET['doctorRequestCancel_id'];
+  $result = adminModel::confirmOrDenyDoctorRegistration($request_id,2,$connection);
+  if ($result) {
+      header('Location:../views/doctor-reg-deny.php');
+  }
+
+}
+
+
 // admin student page search result
 // function patientSearchDetails($id, $word, $accept, $connection)
 // {

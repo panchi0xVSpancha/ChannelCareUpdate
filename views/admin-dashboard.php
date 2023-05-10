@@ -117,7 +117,7 @@ if (!isset($_SESSION['email'])) {
 										<span class="pull-right big-icon watermark"><i class="fa fa-file-text-o"></i></span>
 									</div>
 									<footer class="widget-footer bg-primary">
-										<a href="patient-history-appointment.php"><small> View Detail</small></a>
+										<a href="doctor-registration-requests.php"><small> View Detail</small></a>
 										<span class="small-chart pull-right" data-plugin="sparkline"
 											data-options="[1,2,3,5,4], { type: 'bar', barColor: '#ffffff', barWidth: 5, barSpacing: 2 }"></span>
 									</footer>

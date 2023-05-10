@@ -19,7 +19,7 @@ if (!isset($_SESSION['email'])) {
 
 	<head>
 
-		<title>All Doctors</title>
+		<title>Doctor Registrations Requests</title>
 
 		<link rel="stylesheet" href="libs/bower/font-awesome/css/font-awesome.min.css">
 		<link rel="stylesheet" href="libs/bower/material-design-iconic-font/dist/css/material-design-iconic-font.css">
@@ -58,7 +58,7 @@ if (!isset($_SESSION['email'])) {
 						<div class="col-md-12">
 							<div class="widget">
 								<header class="widget-header">
-									<h4 class="widget-title">Doctors</h4>
+									<h4 class="widget-title">Doctors' Registrations Requests</h4>
 								</header><!-- .widget-header -->
 								<hr class="widget-separator">
 								<div class="widget-body">
@@ -72,15 +72,15 @@ if (!isset($_SESSION['email'])) {
 													<th>Last Name</td>
 													<th>Email</td>
 													<th>Phone Number</th>
-													<th>Address</th>
-
+													<th>Other Details</th>
+													<th>Actions</th>
 												</tr>
 											</thead>
 
 											<tbody>
 												<?php
 												$cnt = 1;
-												$get_doctor = userDetails($connection, 'doctor', 1);
+												$get_doctor = userDetails($connection, 'doctor', 0);
 
 
 												foreach ($get_doctor as $row) {
@@ -103,8 +103,19 @@ if (!isset($_SESSION['email'])) {
 														<td>
 															<?php echo htmlentities($row['phone_number']); ?>
 														</td>
-														<td>
-															<?php echo htmlentities($row['address']); ?>
+
+														<td><button type="button"
+																href="#?first_name=<?php echo $row['first_name']; ?> &last_name=<?php echo $row['last_name']; ?> &email= <?php echo $row['email']; ?> &phone_number=<?php echo $row['phone_number']; ?> &address=<?php echo $row['address']; ?> &specialization=<?php echo $row['specialization']; ?> &license=<?php echo $row['license']; ?> &diploma=<?php echo $row['diploma']; ?> "
+																; class="btn btn-primary">View</button></td>
+
+														<td><button type="button"
+														onclick=' if(confirm("Are you want to reject this doctor registration ?"))
+                                    window.location="../controller/adminController.php?doctorRequestCancel_id=<?php echo $row['doctor_id']; ?>"'
+																; class="btn btn-danger">Deny</button>
+															<button type="button"
+															onclick=' if(confirm("Are you want to add this doctor to the system ?"))
+                                    window.location="../controller/adminController.php?doctorRequestAccept_id=<?php echo $row['doctor_id']; ?>"'
+																; class="btn btn-success">Approve</button>
 														</td>
 
 

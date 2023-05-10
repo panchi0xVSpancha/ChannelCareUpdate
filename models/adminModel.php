@@ -17,6 +17,20 @@ class adminModel
         return $result;
     }
 
+      ////admin accept or deny the doctor registration request (become user_accepted=1 or 2)
+   public static function confirmOrDenyDoctorRegistration($request_id,$accept,$connection)
+   {
+       $query="UPDATE 
+       doctor 
+       SET  
+       user_accepted=$accept
+       WHERE 
+       doctor_id='{$request_id}'";
+
+       $result=mysqli_query($connection,$query);
+       return $result;
+   }
+
 }
 
 

@@ -58,15 +58,15 @@ if (isset($_POST['login'])) {
         }
 
       } else {
-        header('Location:../views/loging.php?errors=' . 'errors');
+        header('Location:../views/login.php?errors=' . 'errors');
       }
 
     } else {
-      header('Location:../views/loging.php?errors=' . 'errors');
+      header('Location:../views/login.php?errors=' . 'errors');
     }
 
   } else {
-    header('Location:../views/loging.php?errors=' . 'errors');
+    header('Location:../views/login.php?errors=' . 'errors');
   }
 }
 

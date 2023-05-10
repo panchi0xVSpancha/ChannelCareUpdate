@@ -29,10 +29,10 @@
 			<h1 style="text-align:center">User Login!</h1>
 				<form action="../controller/logingController.php" name="login" method="post">
 					<?php 
-					// if(isset(($_GET['errors'])))
-					// {
-					// 	echo "<p class='error'>Invalid Username / Password</p>";
-					// } 
+					if(isset(($_GET['errors'])))
+					{
+						echo "<p class='error'>Invalid Username / Password</p>";
+					} 
 					?>
 				
 					<p>Username</p>

@@ -701,6 +701,18 @@ strong {
 /*---------------------------------------
   BOOKING FORM            
 -----------------------------------------*/
+.booking-form .form-control {
+  background: transparent;
+  border-radius: 0;
+  border: 0;
+  border-bottom: 1px solid var(--border-color);
+  color: #6c757d;
+  font-weight: var(--font-weight-normal);
+  padding-top: 12px;
+  padding-bottom: 12px;
+  margin-top: 15px;
+  transition: all 0.3s;
+}
 
 .doctor_search .form-control {
   background: transparent;

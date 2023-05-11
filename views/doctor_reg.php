@@ -2,23 +2,43 @@
 <html>
 
 <head>
-	<link rel="stylesheet" type="text/css" href="../resource/css/register.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/custome/register.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap">
 	<title>Registration Form</title>
 </head>
 
 <body>
-	<div class="background-img1"><img src="../resource/img/doctor.jpg" alt=""></div>
+	<div class="background-img1"><img src="assets/images/doctor.jpg" alt=""></div>
 	<div class="container">
 		<div class="para">
 			<h1><b>U</b>ser <b>R</b>egistration</h1>
 			<h2 style="text-align: center">Doctor</h2>
-			<p style="text-align: center">Hello, we would like to invite you to join our e-channeling system</br> as a registered doctor. By signing up, you'll gain access</br> to a wide range of patients seeking medical care in your specialization area.</br></br> To register, simply visit our website and enter your details,</br> including your specialization area. </br>This will allow us to match you with patients seeking care in your area of expertise.</p>
+			<p style="text-align: center">Hello, we would like to invite you to join our e-channeling system</br> as a
+				registered doctor. By signing up, you'll gain access</br> to a wide range of patients seeking medical
+				care in your specialization area.</br></br> To register, simply visit our website and enter your
+				details,</br> including your specialization area. </br>This will allow us to match you with patients
+				seeking care in your area of expertise.</p>
 		</div>
 		<div class="register">
 			<form id="doctorReg" method="post">
+				<!-- <div> -->
 				<p>Specialization <span class="error" id="specError"></p>
-				<input type="text" id="specialization" name="specialization" placeholder="eg : heart">
+				<select name="specialization" id="specialization" style="border: 2px solid #b0cfff;" required>
+
+					<option value="heart">heart</option>
+					<option value="Orthopedics">Orthopedics</option>
+					<option value="Internal Medicine">Internal Medicine</option>
+					<option value="Dermatology">Dermatology</option>
+					<option value="Pediatrics">Pediatrics</option>
+					<option value="ENT">ENT</option>
+					<option value="Anesthesia">Anesthesia</option>
+					<option value="Pathology">Pathology</option>
+					<option value="Chest Medicine">Chest Medicine</option>
+					<option value="Family Medicine">Family Medicine</option>
+				</select>
+				<!-- </div> -->
+				<!-- <p>Specialization <span class="error" id="specError"></p>
+				<input type="text" id="specialization" name="specialization" placeholder="eg : heart"> -->
 
 				<p>License<span class="error" id="licenseError"></p>
 				<input type="text" id="license" name="license" placeholder="Enter License">
@@ -32,17 +52,6 @@
 				<p>Confirm Password <span class="error"></p>
 				<input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password">
 
-				<!-- <div class="agreement">
-					<div class="term"><b>Term and condition</b></div>
-					<textarea name="aggrement" id="1" cols="30" rows="5">
-1. This is a Web platform for Adverting boarding places. We do not assure you about your sensitive information(ex: credit card details). Please create a pay here account before you making online payments.
-2. We will use your location information to provide you a better experience. We do not store any searching information or location information on our platform.	
-				</textarea>
-				</div>
-				<div class="check">
-					<input id="check" type="checkbox" name="check">
-					<div class="agree"> I am agree with term and condition</div>
-				</div> -->
 				<input type="hidden" id="email" name="email" value="<?php echo $_GET['email']; ?>">
 				<input type="hidden" id="first_name" name="first_name" value="<?php echo $_GET['first_name']; ?>">
 				<input type="hidden" id="last_name" name="last_name" value="<?php echo $_GET['last_name']; ?>">
@@ -53,8 +62,7 @@
 		</div>
 	</div>
 </body>
-<script src="../resource/js/jquery.js"></script>
-<script src="../resource/js/doctor_reg.js"></script>
-<!-- <script src="../resource/js/checkAgree.js"></script> -->
+<script src="../js/jquery.js"></script>
+<script src="../js/doctor_reg.js"></script>
 
 </html>

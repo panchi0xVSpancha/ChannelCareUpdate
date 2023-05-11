@@ -2,14 +2,14 @@
 <html>
 
 <head>
-	<link rel="stylesheet" type="text/css" href="../resource/css/register.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/custome/register.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap">
 	<title>Registration Form</title>
 
 </head>
 
 <body>
-	<div class="background-img1"><img src="../resource/img/proffesionals.jpg" alt="" ></div>
+	<div class="background-img1"><img src="assets/images/proffesionals.jpg" alt="" ></div>
 	<div class="container">
 		<div class="para">
 			<h1><b>U</b>ser <b>R</b>egistration</h1>
@@ -45,8 +45,8 @@
 	</div>
 
 </body>
-<script src="../resource/js/jquery.js"></script>
-<script src="../resource/js/patient_reg.js"></script>
-<!-- <script src="../resource/js/checkAgree.js"></script> -->
+<script src="../js/jquery.js"></script>
+<script src="../js/patient_reg.js"></script>
+
 
 </html>

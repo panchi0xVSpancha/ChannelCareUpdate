@@ -57,11 +57,11 @@ $('#registerForm').on('submit',function(){
           {
             if(data.level=="doctor")
                 {
-                    window.location='doctor_reg.php?email='+data.email+'&first_name='+data.first_name+'&last_name='+data.last_name+'&address='+data.address+'&phone_number='+data.phone_number;
+                    window.location='../views/doctor_reg.php?email='+data.email+'&first_name='+data.first_name+'&last_name='+data.last_name+'&address='+data.address+'&phone_number='+data.phone_number;
                 }
             if(data.level=="patient")
                 {
-                    window.location='patient_reg.php?email='+data.email+'&first_name='+data.first_name+'&last_name='+data.last_name+'&address='+data.address+'&phone_number='+data.phone_number;
+                    window.location='../views/patient_reg.php?email='+data.email+'&first_name='+data.first_name+'&last_name='+data.last_name+'&address='+data.address+'&phone_number='+data.phone_number;
                 }
           }
           

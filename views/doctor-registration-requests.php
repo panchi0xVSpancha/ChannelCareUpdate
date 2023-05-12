@@ -80,7 +80,7 @@ if (!isset($_SESSION['email'])) {
 											<tbody>
 												<?php
 												$cnt = 1;
-												$get_doctor = userDetails($connection, 'doctor', 0);
+												$get_doctor = userDetails($connection, 'doctor', 0);//0 means user_accepted=0.
 
 
 												foreach ($get_doctor as $row) {

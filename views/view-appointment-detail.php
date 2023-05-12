@@ -72,6 +72,7 @@ if (!isset($_SESSION['email'])) {
 
                     $result = getSpecificAppointment($connection, $appointment_id);
                     $record = mysqli_fetch_assoc($result);
+                    $appointment_date=$record['appointment_date'];
 
                     ?>
                     <table border="1" class="table table-bordered mg-b-0">
@@ -99,7 +100,7 @@ if (!isset($_SESSION['email'])) {
                       <tr>
                         <th>Appointment Date</th>
                         <td>
-                          <?php echo $record['appointment_date']; ?>
+                          <?php echo $appointment_date ; ?>
                         </td>
                         <th>Appointment Time</th>
                         <td>
@@ -204,6 +205,7 @@ if (!isset($_SESSION['email'])) {
                                 </tr>
                                 <input type="hidden" class="form-control" placeholder="appointment_id" name="appointment_id" value="<?php echo $appointment_id;?>">
                                 <input type="hidden" class="form-control" placeholder="doctor_id" name="doctor_id" value="<?php echo $doctor_id;?>">
+                                <input type="hidden" class="form-control" placeholder="appointment_date" name="appointment_date" value="<?php echo $appointment_date;?>">
                             </table>
                           </div>
                           <div class="modal-footer">

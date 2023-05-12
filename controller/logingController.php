@@ -30,7 +30,7 @@ if (isset($_POST['login'])) {
     $result = reg_user::loging($useremail, $hash, $connection);
     //prepare database query
     if ($result) {
-     
+
       //query successful
       //check if the user is valid
       if (mysqli_num_rows($result) == 1) {
@@ -42,6 +42,7 @@ if (isset($_POST['login'])) {
         $_SESSION['first_name'] = $record['first_name'];
         $_SESSION['last_name'] = $record['last_name'];
         $_SESSION['address'] = $record['address'];
+        $_SESSION['phone_number'] = $record['phone_number'];
         $ID = reg_user::getId($record['type'], $record['email'], $connection);
         $user_id = mysqli_fetch_assoc($ID);
 

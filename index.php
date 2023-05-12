@@ -46,6 +46,7 @@ if (isset($_POST['submit'])) {
 <head>
     <title>Doctor Appointment Management System || Home Page</title>
 
+    
     <!-- CSS FILES -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
@@ -226,6 +227,7 @@ if (isset($_POST['submit'])) {
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/scrollspy.min.js"></script>
     <script src="js/custom.js"></script>
+
 </body>
 
 </html>

@@ -8,16 +8,24 @@ require_once('../controller/doctorAppointmentController.php');
 if (!isset($_SESSION['email'])) {
   header('location:logout.php');
 } else {
-  if ($_SESSION['type'] !== 'doctor') {
+  if ($_SESSION['type'] !== 'admin') {
     header('location:logout.php');
   }
-  $doctor_id = $_SESSION['doctor_id'];
-  $appointment_id = $_GET['aptid'];
-  $full_name = $_GET['full_name'];
-  $p_email = $_GET['p_email'];
-  $phone = $_GET['phone'];
+  // $doctor_id = $_SESSION['doctor_id'];
+  // $appointment_id = $_GET['aptid'];
+  // $full_name = $_GET['full_name'];
+  // $p_email = $_GET['p_email'];
+  // $phone = $_GET['phone'];
 
-  ?>
+  $first_name = $_GET['first_name'];
+  $last_name = $_GET['last_name'];
+  $email = $_GET['email'];
+  $phone_number = $_GET['phone_number'];
+  $address = $_GET['address'];
+  $specialization = $_GET['specialization'];
+  $license = $_GET['license'];
+  $diploma = $_GET['diploma'];
+?>
   <!DOCTYPE html>
   <html lang="en">
 
@@ -74,102 +82,73 @@ if (!isset($_SESSION['email'])) {
                     $record = mysqli_fetch_assoc($result);
 
                     ?>
-                    <table border="1" class="table table-bordered mg-b-0">
+
+                    <br>
+                    <div class="row">
+                      <div class="col-sm-12 col-md-6" >
+                      <table border="1" class="table table-bordered mg-b-0">
                       <tr>
                         <th>Appointment Number</th>
                         <td>
-                          <?php echo $appointment_id; ?>
+                          <?php
+                          //  echo $appointment_id; 
+                          
+                           ?>
+                           zdsdgsd dss sdfs asdfsd
                         </td>
-                        <th>Patient Name</th>
+                      </tr>
+                      <tr>
+                      <th>Patient Name</th>
                         <td>
-                          <?php echo $full_name; ?>
+                          <?php
+                          //  echo $full_name; 
+                           ?>
                         </td>
                       </tr>
 
                       <tr>
                         <th>Mobile Number</th>
                         <td>
-                          <?php echo $phone; ?>
+                          <?php
+                          //  echo $phone; 
+                           ?>
                         </td>
-                        <th>Email</th>
+                      </tr>
+                      <tr>
+                      <th>Email</th>
                         <td>
-                          <?php echo $p_email; ?>
+                          <?php
+                          //  echo $p_email; 
+                           ?>
                         </td>
                       </tr>
 
                       <tr>
                         <th>Appointment Date</th>
                         <td>
-                          <?php echo $record['appointment_date']; ?>
-                        </td>
-                        <th>Appointment Time</th>
-                        <td>
-                          <?php echo $record['appointment_time']; ?>
-                        </td>
-                      </tr>
-                      
-
-                      <tr>
-                        <th>Apply Date</th>
-                        <td>
-                          <?php echo $record['choose_appointment_date']; ?>
-                        </td>
-                        <th>Appointment Final Status</th>
-
-                        <td colspan="4">
-                          <?php $status = $record['status'];
-
-                          if ($status == 0) {
-                            echo "Not yet updated";
-                          }
-
-                          if ($status == 1) {
-                            echo "Your appointment has been approved";
-                          }
-
-
-                          if ($status == 2) {
-                            echo "Your appointment has been cancelled";
-                          }
-
-
-
-                          ; ?>
+                          <?php
+                          //  echo $record['appointment_date']; 
+                           ?>
                         </td>
                       </tr>
                       <tr>
-
-                        <th>Message</th>
-                        <?php if ($record['message'] == "") { ?>
-
-                          <td colspan="3">
-                            <?php echo "Not Available"; ?>
-                          </td>
-                        <?php } else { ?>
-                          <td colspan="3">
-                            <?php echo htmlentities($record['message']); ?>
-                          </td>
-                        <?php } ?>
-
+                      <th>Appointment Time</th>
+                        <td>
+                          <?php
+                          //  echo $record['appointment_time']; 
+                           ?>
+                        </td>
                       </tr>
+                      </table>
+                      </div>
+                      <div class="col-sm-12 col-md-6" >
+                      <img src="../images/certificate/doctor-certificate.jpg" class="img-fluid" alt="">
+                      <!-- <img src="../images/slider/portrait-successful-mid-adult-doctor-with-crossed-arms.jpg" class="img-fluid" alt=""> -->
+                      </div>
+                    </div>
 
 
-                    </table>
-                    <br>
-
-
-                    <?php
-
-                    if ($status == 0) {
-                      ?>
-                      <p align="center" style="padding-top: 20px">
-                        <button class="btn btn-primary waves-effect waves-light w-lg" data-toggle="modal"
-                          data-target="#myModal">Take Action</button>
-                      </p>
-
-                    <?php } ?>
-                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                      aria-hidden="true">
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
@@ -188,8 +167,7 @@ if (!isset($_SESSION['email'])) {
                                 <tr>
                                   <th>Remark :</th>
                                   <td>
-                                    <textarea name="remark" placeholder="Remark" rows="12" cols="14"
-                                      class="form-control wd-450" required="true"></textarea>
+                                    <textarea name="remark" placeholder="Remark" rows="12" cols="14" class="form-control wd-450" required="true"></textarea>
                                   </td>
                                 </tr>
 
@@ -204,8 +182,8 @@ if (!isset($_SESSION['email'])) {
                                     </select>
                                   </td>
                                 </tr>
-                                <input type="hidden" class="form-control" placeholder="appointment_id" name="appointment_id" value="<?php echo $appointment_id;?>">
-                                <input type="hidden" class="form-control" placeholder="doctor_id" name="doctor_id" value="<?php echo $doctor_id;?>">
+                                <input type="hidden" class="form-control" placeholder="appointment_id" name="appointment_id" value="<?php echo $appointment_id; ?>">
+                                <input type="hidden" class="form-control" placeholder="doctor_id" name="doctor_id" value="<?php echo $doctor_id; ?>">
                             </table>
                           </div>
                           <div class="modal-footer">
@@ -239,7 +217,7 @@ if (!isset($_SESSION['email'])) {
     </main>
     <!--========== END app main -->
 
-  
+
 
     <!-- build:js assets/js/core.min.js -->
     <script src="libs/bower/jquery/dist/jquery.js"></script>

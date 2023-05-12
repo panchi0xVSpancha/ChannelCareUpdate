@@ -47,7 +47,7 @@ if (isset($_POST['login'])) {
 
         if ($record['type'] == "patient") {
           $_SESSION['patient_id'] = $user_id['patient_id'];
-          header('Location:../views/patient-dashboard.php');
+          header('Location:../index.php');
 
         } elseif ($record['type'] == "doctor") {
           $_SESSION['doctor_id'] = $user_id['doctor_id'];

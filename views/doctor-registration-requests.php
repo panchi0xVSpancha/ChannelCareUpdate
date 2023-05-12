@@ -104,9 +104,9 @@ if (!isset($_SESSION['email'])) {
 															<?php echo htmlentities($row['phone_number']); ?>
 														</td>
 
-														<td><button type="button"
-																href="#?first_name=<?php echo $row['first_name']; ?> &last_name=<?php echo $row['last_name']; ?> &email= <?php echo $row['email']; ?> &phone_number=<?php echo $row['phone_number']; ?> &address=<?php echo $row['address']; ?> &specialization=<?php echo $row['specialization']; ?> &license=<?php echo $row['license']; ?> &diploma=<?php echo $row['diploma']; ?> "
-																; class="btn btn-primary">View</button></td>
+														<td><a type="button"
+																href="view-doctor-details.php?first_name=<?php echo $row['first_name']; ?> &last_name=<?php echo $row['last_name']; ?> &email= <?php echo $row['email']; ?> &phone_number=<?php echo $row['phone_number']; ?> &address=<?php echo $row['address']; ?> &specialization=<?php echo $row['specialization']; ?> &license=<?php echo $row['license']; ?> &diploma=<?php echo $row['diploma']; ?> "
+																; class="btn btn-primary">View</a></td>
 
 														<td><button type="button"
 														onclick=' if(confirm("Are you want to reject this doctor registration ?"))

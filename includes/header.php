@@ -34,15 +34,30 @@
                     <a class="nav-link" href="#booking">Booking</a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#contact">Contact</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="views/login.php">Login</a>
+                
+                
+                <?php
+                if (!isset($_SESSION['email'])) {
+                    echo "<li class='nav-item'><a class='nav-link' href='#contact'>Contact</a></li>";
+                } else {
+                    echo "<li class='nav-item active' ><a class='nav-link' href='./views/patient-dashboard.php'><i class='bi bi-speedometer2' style='padding:0px; font-size:25px'></i><span class='username'>Dashboard </span></a></li>";
+                }
+                ?>
+
+                <?php
+                if (!isset($_SESSION['email'])) {
+                    echo "<li class='nav-item active'><a class='nav-link' href='./views/login.php'>Login</a></li>";
+                } else {
+                    echo "<li class='nav-item active' style='padding:0px ; margin:0px 0px'><a class='nav-link' href='./views/patient-dashboard.php'><i class='bi bi-person-circle' style='padding:0px; font-size:25px'></i><span class='username'>Ishan </span></a></li>";
+                }
+                ?>
+
+                <!-- <li class="nav-item active">
+                    <a class="nav-link" href="./views/login.php">Login</a>
                 </li>
                 <li class="nav-item active" style="padding:0px ; margin:0px 0px">
-                    <a class="nav-link" href="views/login.php"><i class="bi bi-person-circle" style="padding:0px; font-size:30px"></i><span class="username">Ishan Ediriweera</span></a>
-                </li>
+                    <a class="nav-link" href="./views/login.php"><i class="bi bi-person-circle" style="padding:0px; font-size:30px"></i><span class="username">Ishan Ediriweera</span></a>
+                </li> -->
             </ul>
         </div>
 

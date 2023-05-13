@@ -3,28 +3,31 @@ session_start();
 //error_reporting(0);
 
 require_once('includes/database.php');
+$keyword1 = null;
+$keyword2 = null;
 
 if (isset($_POST['search']) && $_POST['specialization'] && $_POST['Region']) {
     $doctorsList = null;
     $query = "SELECT * FROM doctor WHERE user_accepted=1 AND specialization='" . $_POST['specialization'] . "' AND region Like '%" . $_POST['Region'] . "%';";
     $doctorsList = mysqli_query($connection, $query);
-
 } else if (isset($_POST['search']) && $_POST['specialization']) {
     $doctorsList = null;
     $query = "SELECT * FROM doctor WHERE user_accepted=1 AND specialization='" . $_POST['specialization'] . "';";
     $doctorsList = mysqli_query($connection, $query);
-
 } else if (isset($_POST['search']) && $_POST['Region']) {
 
     $doctorsList = null;
     $query = "SELECT * FROM doctor WHERE user_accepted=1 AND region Like '%" . $_POST['Region'] . "%';";
     $doctorsList = mysqli_query($connection, $query);
 } else {
-    
+
     $doctorsList = null;
     $query = "SELECT * FROM doctor WHERE user_accepted=1";
     $doctorsList = mysqli_query($connection, $query);
 }
+
+$keyword1 = $_POST['specialization'];
+$keyword2 = $_POST['Region'];
 ?>
 
 
@@ -114,9 +117,22 @@ if (isset($_POST['search']) && $_POST['specialization'] && $_POST['Region']) {
                             </form>
                             <div class="row justify-content-center mt-3">
                                 <?php
+                                if ($keyword1 == null && $keyword2 == null) {
+                                ?>
+                                    <div><span>key words : <?php echo "all" ?></span></div>
+                                <?php
+                                } else {
+                                ?>
+                                    <div><span>key words : <?php echo " " . $keyword1 . ", " . $keyword2; ?></span></div>
+                                <?php
+                                }
+                                ?>
+                                <?php
 
                                 foreach ($doctorsList as $doctor) {
                                 ?>
+
+
                                     <div class="col-8 mt-3">
                                         <div class="card border-info mb-3">
                                             <div class="card-header">
@@ -124,7 +140,7 @@ if (isset($_POST['search']) && $_POST['specialization'] && $_POST['Region']) {
                                             </div>
                                             <div class="card-body text-info">
                                                 <?php
-                                                $query2 = "SELECT * FROM `doctoravailabledayes` WHERE `doctor_id`=" . $doctor['doctor_id'] . ";";
+                                                $query2 = "SELECT * FROM `available_dates` WHERE `doctor_id`=" . $doctor['doctor_id'] . ";";
                                                 $availability = mysqli_query($connection, $query2);
 
                                                 if (mysqli_num_rows($availability) === 0) {
@@ -137,8 +153,8 @@ if (isset($_POST['search']) && $_POST['specialization'] && $_POST['Region']) {
                                                     foreach ($availability as $record) {
                                                     ?>
                                                         <div class="row justify-content-center">
-                                                            <div class="col-3"><?php echo $record['day'] ?></div>
-                                                            <div class="col-4"><?php echo "@" . $record['time'] ?></div>
+                                                            <div class="col-3"><?php echo $record['available_date'] ?></div>
+                                                            <div class="col-4"><?php echo "@" . $record['available_time'] ?></div>
                                                         </div>
 
                                                 <?php

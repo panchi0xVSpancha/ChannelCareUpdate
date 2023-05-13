@@ -54,55 +54,101 @@ if (isset($_POST['submit_action'])) {
   $appointment_date = $_POST['appointment_date'];
   // $old_appointment_time = (new DateTime())->format('Y-m-d H:i:s');
   // $new_appointment_time = (new DateTime())->format('Y-m-d H:i:s');
-  $old_appointment_time = "";
-  $new_appointment_time = "";
+  // $old_appointment_time = "";
+  // $new_appointment_time = "";
   $result='';
 
-  echo "old_appointment_time: $old_appointment_time";
+  // echo "old_appointment_time: $old_appointment_time";
 
   if ($status == 1) {
 
     //calculate appointment time
   $getApprovedA = appointmentModel::getDoctorApprovedAppointments(1, $doctor_id, $appointment_date, $connection);
 
-  if (count($getApprovedA) === 0) {
+  if (count($getApprovedA) == 0) {
     $week_date = date('l', strtotime($appointment_date));
-    echo $week_date;
+    echo "The data type of the variable is: " .gettype($week_date);
+    echo "The data type of the variable is: " .gettype(10);
+   
+    echo 'appointment_date-'.$appointment_date;
+    echo 'week_date-'.$week_date;
+   // $time_doc_availa = date('h:i A', strtotime($old_appointment_time_doc_available . ' +15 minutes'));
     $filter_results = doctorModel::filterDoctorAvailableDates($doctor_id, $week_date, $connection);
-    if (count($filter_results) === 0) {
+    if (count($filter_results) == 0) {
       echo "Not available time slot found";
     } else {
       $row = $filter_results[0];
-      $old_appointment_time = $row['appointment_time'];
-      echo $old_appointment_time;
+      $old_appointment_time_doc_available = $row['available_time'];
+      echo $old_appointment_time_doc_available;
+    
+
       //add 15mins
-      $new_appointment_time = date('h:i A', strtotime($old_appointment_time . ' +15 minutes'));
+      $new_appointment_time_doc_availa = date('h:i A', strtotime($old_appointment_time_doc_available . ' +15 minutes'));
+      echo '<br/>';
+      echo 'adding 15 -min'.$new_appointment_time_doc_availa;
+      echo '<br/>';
+      echo "The data type of the variable is: " .gettype($new_appointment_time_doc_availa);
+
+      $result_doc_availa = appointmentModel::updateSpecificAppointmentByDoctor($appointment_id, $doctor_id, $status, $remark,$new_appointment_time_doc_availa, $connection);
+      if ($result_doc_availa) {
+        //  echo '<script>alert("Remark and status has been updated")</script>';
+        header('Location:../views/all-appointment.php?doc-available');
+      } else {
+        // echo '<script>alert("Remark and status has been not updated")</script>';
+       header('Location:../views/view-appointment-detail.php?doc-available');
+      }
     }
 
   } else {
     $row_desc_date= $getApprovedA[0];
-    $old_appointment_time = $row_desc_date['appointment_time'];
-    echo $old_appointment_time;
+    $old_appointment_time_already_approve = $row_desc_date['appointment_time'];
+    echo $old_appointment_time_already_approve;
     //add 15mins
-    $new_appointment_time = date('h:i A', strtotime($old_appointment_time . ' +15 minutes'));
+    $new_appointment_time_already_approve = date('h:i A', strtotime($old_appointment_time_already_approve . ' +15 minutes'));
+    echo '<br/>';
+    $dateTimeString=$row_desc_date['appointment_date'].''.$new_appointment_time_already_approve;
+    echo $dateTimeString;
+    echo '<br/>';
+    $dateTime = new DateTime($dateTimeString);
+    echo $dateTime->format('Y-m-d H:i:s');
+    echo '<br/>';
+    echo '<script>alert("Remark and status has been not updated")</script>';
+
+    echo '<br/>';
+    // $dateTimeString=$row_desc_date['appointment_date'].''.$new_appointment_time_already_approve;
+    echo $dateTimeString;
+    echo '<br/>';
+    $dateTime = new DateTime($dateTimeString);
+    echo $dateTime->format('Y-m-d H:i:s');
+    echo '<br/>';
+ 
+    $result_already_approve = appointmentModel::updateSpecificAppointmentByDoctor($appointment_id, $doctor_id, $status, $remark,$new_appointment_time_already_approve, $connection);
+    if ($result_already_approve) {
+      //  echo '<script>alert("Remark and status has been updated")</script>';
+      header('Location:../views/all-appointment.php?already_approve');
+    } else {
+      // echo '<script>alert("Remark and status has been not updated")</script>';
+      header('Location:../views/view-appointment-detail.php?already_approve');
+    }
   }
     
-  $result = appointmentModel::updateSpecificAppointmentByDoctor($appointment_id, $doctor_id, $status, $remark,$new_appointment_time, $connection);
+ 
 
   
   }else {
     $result = appointmentModel::updateSpecificAppointmentByDoctor($appointment_id, $doctor_id, $status, $remark,'', $connection);
+    if ($result) {
+      //  echo '<script>alert("Remark and status has been updated")</script>';
+      header('Location:../views/all-appointment.php');
+    } else {
+      // echo '<script>alert("Remark and status has been not updated")</script>';
+      header('Location:../views/view-appointment-detail.php');
+    }
   }
 
 
 
-  if ($result) {
-    //  echo '<script>alert("Remark and status has been updated")</script>';
-    header('Location:../views/all-appointment.php');
-  } else {
-    // echo '<script>alert("Remark and status has been not updated")</script>';
-    header('Location:../views/view-appointment-detail.php');
-  }
+
 }
 
 //get patient appointement details

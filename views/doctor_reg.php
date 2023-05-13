@@ -50,16 +50,16 @@
 				<input type="text" id="specialization" name="specialization" placeholder="eg : heart"> -->
 
 				<p>License<span class="error" id="licenseError"></p>
-				<input type="text" id="license" name="license" placeholder="Enter License">
+				<input type="text" id="license" name="license" placeholder="Enter License" required>
 
 				<p>Diploma<span class="error" id="diplomaError"></p>
 				<input type="text" id="diploma" name="diploma" placeholder="Enter Diploma">
 
 				<p>Password <span class="error" id="passError"></p>
-				<input type="password" id="password" name="password" placeholder="Enter Password">
+				<input type="password" id="password" name="password" placeholder="Enter Password" required>
 
 				<p>Confirm Password <span class="error"></p>
-				<input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password">
+				<input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" required>
 
 				<input type="hidden" id="email" name="email" value="<?php echo $_GET['email']; ?>">
 				<input type="hidden" id="first_name" name="first_name" value="<?php echo $_GET['first_name']; ?>">

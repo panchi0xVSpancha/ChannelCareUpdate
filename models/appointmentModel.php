@@ -39,8 +39,10 @@ class appointmentModel
     {
         $query='';
         if ($status == 1) {
+            echo "accept kara";
             $query = "UPDATE `appointment` SET status='{$status}',remark='{$remark}',appointment_time='{$appointment_time}',update_date=NOW() WHERE appointment_id='{$appointment_id}' AND doctor_id='{$doctor_id}'";
         }else {
+            echo "accept kare na";
             $query = "UPDATE `appointment` SET status='{$status}',remark='{$remark}',update_date=NOW() WHERE appointment_id='{$appointment_id}' AND doctor_id='{$doctor_id}'";
         }
         
@@ -84,7 +86,7 @@ class appointmentModel
     public static function getDoctorApprovedAppointments($status, $doctor_id,$appointment_date, $connection)
     {
         $data = array();
-        $query = "SELECT * FROM `appointment` WHERE status=$status AND doctor_id=$doctor_id AND appointment_date=$appointment_date ORDER BY supdate_date DESC";
+        $query = "SELECT * FROM `appointment` WHERE status=$status AND doctor_id=$doctor_id AND appointment_date='{$appointment_date}' ORDER BY update_date DESC";
         $result_set = mysqli_query($connection, $query);
         while ($row = mysqli_fetch_assoc($result_set)) {
             $data[] = $row;

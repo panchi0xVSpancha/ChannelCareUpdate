@@ -65,6 +65,11 @@ if (!isset($_SESSION['email'])) {
                 <header class="widget-header">
                   <h4 class="widget-title" style="color: blue">Appointment Details</h4>
                 </header><!-- .widget-header -->
+                <?php if (isset($_GET['error-available-slot'])) {
+                 echo '<div class="alert alert-danger" style="margin:20px" role="alert">
+                 No available time slot found. So you cannot approve this appointment.
+               </div>';
+                }?>
                 <hr class="widget-separator">
                 <div class="widget-body">
                   <div class="table-responsive">
@@ -208,6 +213,12 @@ if (!isset($_SESSION['email'])) {
                                 <input type="hidden" class="form-control" placeholder="appointment_id" name="appointment_id" value="<?php echo $appointment_id;?>">
                                 <input type="hidden" class="form-control" placeholder="doctor_id" name="doctor_id" value="<?php echo $doctor_id;?>">
                                 <input type="hidden" class="form-control" placeholder="appointment_date" name="appointment_date" value="<?php echo $appointment_date;?>">
+
+                                <input type="hidden" class="form-control" placeholder="full_name" name="full_name" value="<?php echo $full_name;?>">
+                                <input type="hidden" class="form-control" placeholder="p_email" name="p_email" value="<?php echo $p_email;?>">
+                                <input type="hidden" class="form-control" placeholder="phone" name="phone" value="<?php echo $phone;?>">
+                              
+                              
                             </table>
                           </div>
                           <div class="modal-footer">

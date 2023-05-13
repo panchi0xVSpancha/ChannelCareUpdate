@@ -1,9 +1,34 @@
 <?php
 session_start();
 //error_reporting(0);
-include('views/includes/dbconnection.php');
 
+require_once('includes/database.php');
+
+if (isset($_POST['search']) && $_POST['specialization'] && $_POST['Region']) {
+    $doctorsList = null;
+    $query = "SELECT * FROM doctor WHERE user_accepted=1 AND specialization='" . $_POST['specialization'] . "' AND region Like '%" . $_POST['Region'] . "%';";
+    $doctorsList = mysqli_query($connection, $query);
+
+} else if (isset($_POST['search']) && $_POST['specialization']) {
+    $doctorsList = null;
+    $query = "SELECT * FROM doctor WHERE user_accepted=1 AND specialization='" . $_POST['specialization'] . "';";
+    $doctorsList = mysqli_query($connection, $query);
+
+} else if (isset($_POST['search']) && $_POST['Region']) {
+
+    $doctorsList = null;
+    $query = "SELECT * FROM doctor WHERE user_accepted=1 AND region Like '%" . $_POST['Region'] . "%';";
+    $doctorsList = mysqli_query($connection, $query);
+} else {
+    
+    $doctorsList = null;
+    $query = "SELECT * FROM doctor WHERE user_accepted=1";
+    $doctorsList = mysqli_query($connection, $query);
+}
 ?>
+
+
+
 <!doctype html>
 <html lang="en">
 
@@ -26,11 +51,11 @@ include('views/includes/dbconnection.php');
     <link href="css/owl.theme.default.min.css" rel="stylesheet">
 
     <link href="css/templatemo-medic-care.css" rel="stylesheet">
-
+    <!-- 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
     <title>Bootstrap Example</title>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script> -->
     <script>
 
     </script>
@@ -53,86 +78,85 @@ include('views/includes/dbconnection.php');
 
                             <form role="form" method="post">
                                 <div class="row">
-                                    <div class="col-lg-6 col-12">
-                                        <select onChange="getdoctors(this.value);" name="specialization" id="specialization" class="form-control" required>
+                                    <div class="col-lg-4 col-6">
+                                        </br>
+                                        <select onchange="" name="specialization" id="specialization" class="form-control">
                                             <option value="">Select specialization</option>
-                                            <!--- Fetching States--->
-                                            <?php
-                                            $sql = "SELECT * FROM tblspecialization";
-                                            $stmt = $dbh->query($sql);
-                                            $stmt->setFetchMode(PDO::FETCH_ASSOC);
-                                            while ($row = $stmt->fetch()) {
-                                            ?>
-                                                <option value="<?php echo $row['ID']; ?>"><?php echo $row['Specialization']; ?></option>
-                                            <?php } ?>
+                                            <option value="heart">heart</option>
+                                            <option value="Orthopedics">Orthopedics</option>
+                                            <option value="Internal Medicine">Internal Medicine</option>
+                                            <option value="Dermatology">Dermatology</option>
+                                            <option value="Pediatrics">Pediatrics</option>
+                                            <option value="ENT">ENT</option>
+                                            <option value="Anesthesia">Anesthesia</option>
+                                            <option value="Pathology">Pathology</option>
+                                            <option value="Chest Medicine">Chest Medicine</option>
+                                            <option value="Family Medicine">Family Medicine</option>
                                         </select>
                                     </div>
-                                    <div class="col-lg-6 col-12">
-                                        <select onChange="getdoctors(this.value);" name="Region" id="Region" class="form-control" required>
+                                    <div class="col-lg-4 col-6">
+                                        </br>
+                                        <select onChange="" name="Region" id="Region" class="form-control">
                                             <option value="">Select Region</option>
-                                            <option value="Silesian_Region">Silesian Region</option>
-                                            <option value="Pardubice_Region">Pardubice Region</option>
-                                            <option value="Ústí_Region">Ústí Region</option>
-                                            <option value="Vysočina_Region">Vysočina Region</option>
-                                            <option value="South_Bohemian_Region">South Bohemian Region</option>
-                                            <option value="Zlín_Region">Zlín Region</option>
+                                            <option value="Silesian">Silesian Region</option>
+                                            <option value="Pardubice">Pardubice Region</option>
+                                            <option value="Ústí">Ústí Region</option>
+                                            <option value="Vysočina">Vysočina Region</option>
+                                            <option value="South_Bohemian">South Bohemian Region</option>
+                                            <option value="Zlín">Zlín Region</option>
                                         </select>
+                                    </div>
+                                    <div class="col-lg-4 col-12">
+                                        <button type="submit" class="form-control" name="search" id="submit-button">Search</button>
                                     </div>
                                 </div>
 
                             </form>
                             <div class="row justify-content-center mt-3">
-                                <div class="col-8 mt-3">
-                                    <div class="card border-info mb-3">
-                                        <div class="card-header">
-                                            <h5>Dr. Jaroslav Tvaruzek</h5>
-                                        </div>
-                                        <div class="card-body text-info">
-                                            <div class="row justify-content-center">
-                                                <div class="col-3">Mondays</div>
-                                                <div class="col-4">@2pm</div>
-                                            </div>
-                                            <div class="row justify-content-center">
-                                                <div class="col-3">Tuesdays</div>
-                                                <div class="col-4">@6pm</div>
-                                            </div>
-                                            <div class="row justify-content-center">
-                                                <div class="col-3">Fridays</div>
-                                                <div class="col-4">@6pm</div>
-                                            </div>
-                                            <div class="row justify-content-center">
-                                                <div class="col-3">Saturday</div>
-                                                <div class="col-4">@8pm</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <?php
 
-                                <div class="col-8 mt-3">
-                                    <div class="card border-info mb-3">
-                                        <div class="card-header">
-                                            <h5>Dr. Jaroslav Tvaruzek</h5>
-                                        </div>
-                                        <div class="card-body text-info">
-                                            <div class="row justify-content-center">
-                                                <div class="col-3">Mondays</div>
-                                                <div class="col-4">@2pm</div>
+                                foreach ($doctorsList as $doctor) {
+                                ?>
+                                    <div class="col-8 mt-3">
+                                        <div class="card border-info mb-3">
+                                            <div class="card-header">
+                                                <h5>Dr. <?php echo $doctor['first_name'] . " " . $doctor['last_name']  ?> </h5>
                                             </div>
-                                            <div class="row justify-content-center">
-                                                <div class="col-3">Tuesdays</div>
-                                                <div class="col-4">@6pm</div>
-                                            </div>
-                                            <div class="row justify-content-center">
-                                                <div class="col-3">Fridays</div>
-                                                <div class="col-4">@6pm</div>
-                                            </div>
-                                            <div class="row justify-content-center">
-                                                <div class="col-3">Saturday</div>
-                                                <div class="col-4">@8pm</div>
+                                            <div class="card-body text-info">
+                                                <?php
+                                                $query2 = "SELECT * FROM `doctoravailabledayes` WHERE `doctor_id`=" . $doctor['doctor_id'] . ";";
+                                                $availability = mysqli_query($connection, $query2);
+
+                                                if (mysqli_num_rows($availability) === 0) {
+                                                ?>
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-3"><?php echo " No available days."; ?></div>
+                                                    </div>
+                                                    <?php
+                                                } else {
+                                                    foreach ($availability as $record) {
+                                                    ?>
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-3"><?php echo $record['day'] ?></div>
+                                                            <div class="col-4"><?php echo "@" . $record['time'] ?></div>
+                                                        </div>
+
+                                                <?php
+                                                    }
+                                                }
+                                                ?>
+
+                                                <?php
+
+                                                ?>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                <?php
+                                }
+
+                                ?>
+
                             </div>
                             <div class="col-lg-3 col-md-4 col-6 mx-auto">
                                 <button type="submit" class="form-control" name="submit" id="submit-button">Book Now</button>

@@ -84,6 +84,14 @@
           <ul class="dropdown-menu animated flipInY">
             <li><a href="profile.php"><i class="zmdi m-r-md zmdi-hc-lg zmdi-account-box"></i>My Profile</a></li>
             <li><a href="change-password.php"><i class="zmdi m-r-md zmdi-hc-lg zmdi-balance-wallet"></i>Change Password</a></li>
+            <?php
+            if($_SESSION['type']!=='patient'){
+              echo "";
+            }else{
+              echo "<li><a href='../index.php'><i class='zmdi m-r-md zmdi-hc-lg zmdi-balance-wallet'></i>Home</a></li>";
+            }
+            ?>
+            
             <li><a href="logout.php"><i class="zmdi m-r-md zmdi-hc-lg zmdi-sign-in"></i>Logout</a></li>
           </ul>
         </li>

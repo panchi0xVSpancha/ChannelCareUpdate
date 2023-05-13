@@ -23,7 +23,16 @@
 			<form id="doctorReg" method="post">
 				<!-- <div> -->
 				<p>Specialization <span class="error" id="specError"></p>
-				<select name="specialization" id="specialization" style="border: 2px solid #b0cfff;" required>
+				<select class="reg_dropdown" name="specialization" id="specialization" style="border: none;
+							border-radius: 5px;
+							background: transparent;
+							outline: none;
+							height: 30px;
+							width: 100%;
+							color: rgb(52, 52, 52);
+							font-size: 14px;
+							background: #b8bcc4;
+							box-sizing: border-box;" required>
 
 					<option value="heart">heart</option>
 					<option value="Orthopedics">Orthopedics</option>

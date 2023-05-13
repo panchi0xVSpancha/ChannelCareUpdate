@@ -52,9 +52,13 @@ if (isset($_POST['submit_action'])) {
   $appointment_id = $_POST['appointment_id'];
   $doctor_id = $_POST['doctor_id'];
   $appointment_date = $_POST['appointment_date'];
-  $old_appointment_time = '';
-  $new_appointment_time = '';
+  // $old_appointment_time = (new DateTime())->format('Y-m-d H:i:s');
+  // $new_appointment_time = (new DateTime())->format('Y-m-d H:i:s');
+  $old_appointment_time = "";
+  $new_appointment_time = "";
   $result='';
+
+  echo "old_appointment_time: $old_appointment_time";
 
   if ($status == 1) {
 

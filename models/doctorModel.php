@@ -55,7 +55,7 @@ class doctorModel
       public static function filterDoctorAvailableDates($doctor_id,$available_date, $connection)
       {
           $data = array();
-          $query = "SELECT * FROM `available_dates` WHERE  doctor_id=$doctor_id AND available_date=$available_date";
+          $query = "SELECT * FROM `available_dates` WHERE  doctor_id=$doctor_id AND available_date='{$available_date}'";
           $result_set = mysqli_query($connection, $query);
           while ($row = mysqli_fetch_assoc($result_set)) {
               $data[] = $row;

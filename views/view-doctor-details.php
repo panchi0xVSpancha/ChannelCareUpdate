@@ -12,19 +12,15 @@ if (!isset($_SESSION['email'])) {
     header('location:logout.php');
   }
   // $doctor_id = $_SESSION['doctor_id'];
-  // $appointment_id = $_GET['aptid'];
-  // $full_name = $_GET['full_name'];
-  // $p_email = $_GET['p_email'];
-  // $phone = $_GET['phone'];
 
   $first_name = $_GET['first_name'];
   $last_name = $_GET['last_name'];
   $email = $_GET['email'];
   $phone_number = $_GET['phone_number'];
-  $address = $_GET['address'];
+  $region = $_GET['region'];
   $specialization = $_GET['specialization'];
   $license = $_GET['license'];
-  $diploma = $_GET['diploma'];
+  $certificate = $_GET['certificate'];
 ?>
   <!DOCTYPE html>
   <html lang="en">
@@ -87,63 +83,70 @@ if (!isset($_SESSION['email'])) {
                     <div class="row">
                       <div class="col-sm-12 col-md-6" >
                       <table border="1" class="table table-bordered mg-b-0">
+
                       <tr>
-                        <th>Appointment Number</th>
+                        <th>Full name</th>
                         <td>
                           <?php
-                          //  echo $appointment_id; 
-                          
+                            echo $first_name ." ". $last_name;
                            ?>
-                           zdsdgsd dss sdfs asdfsd
                         </td>
                       </tr>
                       <tr>
-                      <th>Patient Name</th>
+                        <th>Phone number</th>
                         <td>
                           <?php
-                          //  echo $full_name; 
+                            echo $phone_number;
+                           ?>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Region</th>
+                        <td>
+                          <?php
+                            echo $region;
+                           ?>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Specialization</th>
+                        <td>
+                          <?php
+                            echo $specialization;
+                           ?>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Licence</th>
+                        <td>
+                          <?php
+                            echo $license;
+                           ?>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Email</th>
+                        <td>
+                          <?php
+                            echo $email;
                            ?>
                         </td>
                       </tr>
 
-                      <tr>
-                        <th>Mobile Number</th>
-                        <td>
-                          <?php
-                          //  echo $phone; 
-                           ?>
-                        </td>
-                      </tr>
-                      <tr>
-                      <th>Email</th>
-                        <td>
-                          <?php
-                          //  echo $p_email; 
-                           ?>
-                        </td>
-                      </tr>
 
-                      <tr>
-                        <th>Appointment Date</th>
-                        <td>
-                          <?php
-                          //  echo $record['appointment_date']; 
-                           ?>
-                        </td>
-                      </tr>
-                      <tr>
-                      <th>Appointment Time</th>
-                        <td>
-                          <?php
-                          //  echo $record['appointment_time']; 
-                           ?>
-                        </td>
-                      </tr>
+
                       </table>
                       </div>
                       <div class="col-sm-12 col-md-6" >
-                      <img src="../images/certificate/doctor-certificate.jpg" class="img-fluid" alt="">
-                      <!-- <img src="../images/slider/portrait-successful-mid-adult-doctor-with-crossed-arms.jpg" class="img-fluid" alt=""> -->
+                      <?php 
+                      
+                      $path = str_replace(strstr($certificate, ' ®_date='), '', $certificate);
+                      $fName = basename($path); // Get only the filename with extension
+                      $targetPath = '../images/uploads/' . $fName; 
+                      ?>
+                      <img  class="img-fluid" alt="" src="<?php echo $targetPath; ?>">
+                     
+                      <!-- <img src="../images/uploads/3.jpg" class="img-fluid" alt=""> -->
                       </div>
                     </div>
 

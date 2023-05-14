@@ -20,7 +20,18 @@
 				seeking care in your area of expertise.</p>
 		</div>
 		<div class="register">
-			<form id="doctorReg" method="post">
+			<form id="doctorReg" method="post" action="../controller/registerCon.php" enctype="multipart/form-data">
+
+			<?php
+				// if (isset(($_GET['errSpecialization'] && $_GET['errLicense'] && $_GET['errPass'] ))) {
+				// 	echo "<span class='error' style='font-size:small'>".$_GET['errSpecialization']."</span>";
+				// }
+				?>
+				<?php
+				if (isset($_GET['errSpecialization']) || isset($_GET['errLicense']) || isset($_GET['errPass'])) {
+					echo "<span class='error' style='font-size:x-small'>".$_GET['errSpecialization'].$_GET['errLicense'].$_GET['errPass']."</span>";
+				}
+				?>
 				<!-- <div> -->
 				<p>Specialization <span class="error" id="specError"></p>
 				<select class="reg_dropdown" name="specialization" id="specialization" style="border: none;
@@ -50,28 +61,29 @@
 				<input type="text" id="specialization" name="specialization" placeholder="eg : heart"> -->
 
 				<p>License<span class="error" id="licenseError"></p>
-				<input type="text" id="license" name="license" placeholder="Enter License">
+				<input type="text" id="license" name="license" placeholder="Enter License" required>
 
-				<p>Diploma<span class="error" id="diplomaError"></p>
-				<input type="text" id="diploma" name="diploma" placeholder="Enter Diploma">
+				<p>Diploma Image upload<span class="error" id="diplomaError"></p>
+				<!-- <input type="text" id="diploma" name="diploma" placeholder="Enter Diploma"> -->
+				<input type="file" name="certificate" id="certificate"><br>
 
 				<p>Password <span class="error" id="passError"></p>
-				<input type="password" id="password" name="password" placeholder="Enter Password">
+				<input type="password" id="password" name="password" placeholder="Enter Password" required>
 
 				<p>Confirm Password <span class="error"></p>
-				<input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password">
+				<input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" required>
 
 				<input type="hidden" id="email" name="email" value="<?php echo $_GET['email']; ?>">
 				<input type="hidden" id="first_name" name="first_name" value="<?php echo $_GET['first_name']; ?>">
 				<input type="hidden" id="last_name" name="last_name" value="<?php echo $_GET['last_name']; ?>">
 				<input type="hidden" id="address" name="address" value="<?php echo $_GET['address']; ?>">
 				<input type="hidden" id="phone_number" name="phone_number" value="<?php echo $_GET['phone_number']; ?>">
-				<input id="register" type="submit" name="register" value="Register">
+				<input id="saveDoctor" type="submit" name="saveDoctor" value="Register">
 			</form>
 		</div>
 	</div>
 </body>
 <script src="../js/jquery.js"></script>
-<script src="../js/doctor_reg.js"></script>
+<!-- <script src="../js/doctor_reg.js"></script> -->
 
 </html>

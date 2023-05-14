@@ -35,11 +35,11 @@ class appointmentModel
         return $result_set;
     }
     //update status a specific appointment by doctor
-    public static function updateSpecificAppointmentByDoctor($appointment_id, $doctor_id, $status, $remark,$appointment_time, $connection)
+    public static function updateSpecificAppointmentByDoctor($appointment_id, $doctor_id, $status, $remark,$appointment_time,$choose_appointment_date,$notification_time, $connection)
     {
         $query='';
         if ($status == 1) {
-            $query = "UPDATE `appointment` SET status='{$status}',remark='{$remark}',appointment_time='{$appointment_time}',update_date=NOW() WHERE appointment_id='{$appointment_id}' AND doctor_id='{$doctor_id}'";
+            $query = "UPDATE `appointment` SET status='{$status}',remark='{$remark}',appointment_time='{$appointment_time}',choose_appointment_date='{$choose_appointment_date}',notification_time='{$notification_time}',update_date=NOW() WHERE appointment_id='{$appointment_id}' AND doctor_id='{$doctor_id}'";
         }else {
             $query = "UPDATE `appointment` SET status='{$status}',remark='{$remark}',update_date=NOW() WHERE appointment_id='{$appointment_id}' AND doctor_id='{$doctor_id}'";
         }
@@ -84,7 +84,7 @@ class appointmentModel
     public static function getDoctorApprovedAppointments($status, $doctor_id,$appointment_date, $connection)
     {
         $data = array();
-        $query = "SELECT * FROM `appointment` WHERE status=$status AND doctor_id=$doctor_id AND appointment_date=$appointment_date ORDER BY supdate_date DESC";
+        $query = "SELECT * FROM `appointment` WHERE status=$status AND doctor_id=$doctor_id AND appointment_date='{$appointment_date}' ORDER BY update_date DESC";
         $result_set = mysqli_query($connection, $query);
         while ($row = mysqli_fetch_assoc($result_set)) {
             $data[] = $row;

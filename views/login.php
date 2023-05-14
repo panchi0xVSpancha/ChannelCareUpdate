@@ -42,6 +42,9 @@
 				<input type="submit" name="login" value="Login">
 
 				<p style="font-weight: bolder; font-size:15px;color:#101e5a;">Don't have an account ? <a style="color:#5d80b6;" href="register.php"> Sign Up</a></p>
+			</br>
+			</br>
+				<center><p style="font-weight: bolder; font-size:15px;color:#101e5a;">Go to <a style="color:#5d80b6;" href="../index.php"> home page</a></p></center>
 
 			</form>
 		</div>

@@ -105,7 +105,7 @@ if (!isset($_SESSION['email'])) {
 														</td>
 
 														<td><a type="button"
-																href="view-doctor-details.php?first_name=<?php echo $row['first_name']; ?> &last_name=<?php echo $row['last_name']; ?> &email= <?php echo $row['email']; ?> &phone_number=<?php echo $row['phone_number']; ?> &address=<?php echo $row['address']; ?> &specialization=<?php echo $row['specialization']; ?> &license=<?php echo $row['license']; ?> &diploma=<?php echo $row['diploma']; ?> "
+																href="view-doctor-details.php?first_name=<?php echo $row['first_name']; ?> &last_name=<?php echo $row['last_name']; ?> &email= <?php echo $row['email']; ?> &phone_number=<?php echo $row['phone_number']; ?> &region=<?php echo $row['region']; ?> &specialization=<?php echo $row['specialization']; ?> &license=<?php echo $row['license']; ?> &certificate=<?php echo $row['diploma']; ?> &reg_date=<?php echo $row['reg_date']; ?> "
 																; class="btn btn-primary">View</a></td>
 
 														<td><button type="button"

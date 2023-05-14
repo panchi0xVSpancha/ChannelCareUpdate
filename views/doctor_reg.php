@@ -22,14 +22,14 @@
 		<div class="register">
 			<form id="doctorReg" method="post" action="../controller/registerCon.php" enctype="multipart/form-data">
 
-			<?php
+				<?php
 				// if (isset(($_GET['errSpecialization'] && $_GET['errLicense'] && $_GET['errPass'] ))) {
 				// 	echo "<span class='error' style='font-size:small'>".$_GET['errSpecialization']."</span>";
 				// }
 				?>
 				<?php
 				if (isset($_GET['errSpecialization']) || isset($_GET['errLicense']) || isset($_GET['errPass'])) {
-					echo "<span class='error' style='font-size:x-small'>".$_GET['errSpecialization'].$_GET['errLicense'].$_GET['errPass']."</span>";
+					echo "<span class='error' style='font-size:x-small'>" . $_GET['errSpecialization']. $_GET['errLicense'] . $_GET['errPass'] . "</span>";
 				}
 				?>
 				<!-- <div> -->
@@ -60,6 +60,27 @@
 				<!-- <p>Specialization <span class="error" id="specError"></p>
 				<input type="text" id="specialization" name="specialization" placeholder="eg : heart"> -->
 
+				<p>Region <span class="error" id="specError"></p>
+				<select class="reg_dropdown" name="region" id="region" style="border: none;
+							border-radius: 5px;
+							background: transparent;
+							outline: none;
+							height: 30px;
+							width: 100%;
+							color: rgb(52, 52, 52);
+							font-size: 14px;
+							background: #b8bcc4;
+							box-sizing: border-box;" required>
+
+
+					<option value="Silesian">Silesian Region</option>
+					<option value="Pardubice">Pardubice Region</option>
+					<option value="Ústí">Ústí Region</option>
+					<option value="Vysočina">Vysočina Region</option>
+					<option value="South_Bohemian">South Bohemian Region</option>
+					<option value="Zlín">Zlín Region</option>
+				</select>
+
 				<p>License<span class="error" id="licenseError"></p>
 				<input type="text" id="license" name="license" placeholder="Enter License" required>
 
@@ -71,7 +92,8 @@
 				<input type="password" id="password" name="password" placeholder="Enter Password" required>
 
 				<p>Confirm Password <span class="error"></p>
-				<input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" required>
+				<input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password"
+					required>
 
 				<input type="hidden" id="email" name="email" value="<?php echo $_GET['email']; ?>">
 				<input type="hidden" id="first_name" name="first_name" value="<?php echo $_GET['first_name']; ?>">
@@ -84,6 +106,6 @@
 	</div>
 </body>
 <script src="../js/jquery.js"></script>
-<!-- <script src="../js/doctor_reg.js"></script> -->
+
 
 </html>

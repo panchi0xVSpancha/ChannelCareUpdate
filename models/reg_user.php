@@ -11,9 +11,9 @@ class reg_user
     }
 
     // doctor registration 
-    public static function doctorReg($email, $first_name, $last_name, $address, $phone_number, $password, $specialization, $license, $diploma, $connection)
+    public static function doctorReg($email, $first_name, $last_name, $address, $phone_number, $password, $specialization, $license, $diploma,$region, $connection)
     {
-        $query = "INSERT INTO doctor (email,first_name,last_name,address,phone_number,password,type,specialization,license,diploma) VALUES('{$email}','{$first_name}','{$last_name}','{$address}','{$phone_number}','{$password}','doctor','{$specialization}','{$license}','{$diploma}')";
+        $query = "INSERT INTO doctor (email,first_name,last_name,address,phone_number,password,type,specialization,license,diploma,region) VALUES('{$email}','{$first_name}','{$last_name}','{$address}','{$phone_number}','{$password}','doctor','{$specialization}','{$license}','{$diploma}','{$region}' )";
         $result_set = mysqli_query($connection, $query);
         
         if (!$result_set) {

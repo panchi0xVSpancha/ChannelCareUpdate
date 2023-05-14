@@ -139,6 +139,7 @@ if (isset($_POST['saveDoctor'])) {
         try {
                 $errors = array();
                 $errors['specialization'] = '';
+               // $errors['region'] = '';
                 $errors['license'] = '';
                 $errors['diploma'] = '';
                 $errors['pass'] = '';
@@ -151,6 +152,7 @@ if (isset($_POST['saveDoctor'])) {
                 $password = mysqli_real_escape_string($connection, $_POST['password']);
                 $confirmPassword = mysqli_real_escape_string($connection, $_POST['confirmpassword']);
                 $specialization = mysqli_real_escape_string($connection, $_POST['specialization']);
+                $region = mysqli_real_escape_string($connection, $_POST['region']);
                 $license = mysqli_real_escape_string($connection, $_POST['license']);
                 $level = 'doctor';
                 $certificate = $_FILES['certificate'];
@@ -169,6 +171,11 @@ if (isset($_POST['saveDoctor'])) {
                 if (!isset($specialization) || strlen(trim($specialization)) < 1) {
                         $errors['specialization'] = '*Specialization required';
                 }
+
+                // if (!isset($region) || strlen(trim($region)) < 1) {
+                //         $errors['region'] = '*Region required';
+                // }
+
                 if (!isset($license) || strlen(trim($license)) < 1) {
                         $errors['license'] = '*License  required';
                 }
@@ -195,7 +202,7 @@ if (isset($_POST['saveDoctor'])) {
                 if ($errors['specialization'] == "" && $errors['license'] == "" && $errors['pass'] == "") {
                         $token = bin2hex(random_bytes(50));
                         $hash = sha1($password);
-                        $result = reg_user::doctorReg($email, $first_name, $last_name, $address, $phone_number, $hash, $specialization, $license, $target_file, $connection);
+                        $result = reg_user::doctorReg($email, $first_name, $last_name, $address, $phone_number, $hash, $specialization, $license, $target_file,$region, $connection);
                         $errors['state'] = 'sucess';
 
                         if ($result) {

@@ -47,17 +47,7 @@
 
           <div class="media-group dropdown-menu animated flipInY">
          <?php
-       //  $docid=$_SESSION['damsid'];
-// $sql="SELECT * from tblappointment  where Status is null && Doctor=:docid";
-// $query = $dbh -> prepare($sql);
-// $query-> bindParam(':docid', $docid, PDO::PARAM_STR);
-// $query->execute();
-// $results=$query->fetchAll(PDO::FETCH_OBJ);
 
-// $cnt=1;
-// $totalappintments=$query->rowCount();
-// foreach($results as $row)
-// { 
 
   ?>
 
@@ -82,8 +72,10 @@
         <li class="dropdown">
           <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="zmdi zmdi-hc-lg zmdi-settings"></i></a>
           <ul class="dropdown-menu animated flipInY">
+            <?php   if($_SESSION['type']==='doctor'){ ?>
+        
             <li><a href="profile.php"><i class="zmdi m-r-md zmdi-hc-lg zmdi-account-box"></i>My Profile</a></li>
-            <li><a href="change-password.php"><i class="zmdi m-r-md zmdi-hc-lg zmdi-balance-wallet"></i>Change Password</a></li>
+            <?php }?>
             <?php
             if($_SESSION['type']!=='patient'){
               echo "";

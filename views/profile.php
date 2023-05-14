@@ -10,7 +10,8 @@ if (!isset($_SESSION['email'])) {
   if ($_SESSION['type'] !== 'doctor') {
     header('location:logout.php');
   }
-  $doctor_id = $_SESSION['doctor_id']
+  $doctor_id = $_SESSION['doctor_id'];
+  $email = $_SESSION['email'];
     ?>
   <!DOCTYPE html>
   <html lang="en">
@@ -58,29 +59,38 @@ if (!isset($_SESSION['email'])) {
                 <div class="widget-body">
 
                   <form class="form-horizontal" method="post">
+                    <?php 
+                    $result=getADoctorDetails($connection,$email);
+                    $record = mysqli_fetch_assoc($result);
+                    ?>
                     <div class="form-group">
-                      <label for="exampleTextInput1" class="col-sm-3 control-label">Name : </label>
-                      <div class="col-sm-9">
-                        <input id="fname" type="text" class="form-control" placeholder="Full Name" name="fname"
-                          required="true" value="<?php echo $row->FullName; ?>">
+                      <label for="exampleTextInput1" class="col-sm-3 control-label">Full Name : </label>
+                      <div class="col-sm-4">
+                        <input id="fname" type="text" class="form-control" placeholder="First Name" name="first_name"
+                          required="true" value="<?php echo $record['first_name']; ?>" readonly="true">
+                      </div>
+
+                      <div class="col-sm-5">
+                        <input id="fname" type="text" class="form-control" placeholder="Last Name" name="last_name"
+                          required="true" value="<?php echo $record['last_name']; ?>" readonly="true">
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label for="email2" class="col-sm-3 control-label">Contact Number:</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="email2" name="mobilenumber" value="val"
-                          required='true' maxlength='10'>
+                        <input type="text" class="form-control" id="phone_number" name="phone_number" value="<?php echo $record['phone_number']; ?>"
+                          required='true' maxlength='10' readonly="true">
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label for="email2" class="col-sm-3 control-label">Specialization:</label>
                       <div class="col-sm-9">
-                        <select onChange="getdoctors(this.value);" name="specialization" id="specialization"
+                        <select onChange="" name="specialization" id="specialization" readonly="true"
                           class="form-control" required>
-                          <option value="">Select specialization</option>
-                          <option value="heart">heart</option>
+                          <option value="<?php echo $record['specialization']; ?>"><?php echo $record['specialization']; ?></option>
+                          <!-- <option value="heart">heart</option>
                           <option value="Orthopedics">Orthopedics</option>
                           <option value="Internal Medicine">Internal Medicine</option>
                           <option value="Dermatology">Dermatology</option>
@@ -89,7 +99,7 @@ if (!isset($_SESSION['email'])) {
                           <option value="Anesthesia">Anesthesia</option>
                           <option value="Pathology">Pathology</option>
                           <option value="Chest Medicine">Chest Medicine</option>
-                          <option value="Family Medicine">Family Medicine</option>
+                          <option value="Family Medicine">Family Medicine</option> -->
 
 
 
@@ -104,16 +114,16 @@ if (!isset($_SESSION['email'])) {
                   <div class="form-group">
                     <label for="email2" class="col-sm-3 control-label">Regsitration Date:</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="email2" name="" value="val" readonly="true">
+                      <input type="text" class="form-control" id="email2" name="" value="<?php echo $record['reg_date']; ?>" readonly="true">
                     </div>
                   </div>
 
-                  <div class="row">
+                  <!-- <div class="row">
                     <div class="col-sm-9 col-sm-offset-3">
                       <button type="submit" class="btn btn-success" name="submit">Update</button>
 
                     </div>
-                  </div>
+                  </div> -->
                 </form>
                 <hr />
                 <div>

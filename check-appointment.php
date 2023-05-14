@@ -3,6 +3,8 @@ session_start();
 //error_reporting(0);
 
 require_once('includes/database.php');
+
+
 $keyword1 = null;
 $keyword2 = null;
 
@@ -26,8 +28,25 @@ if (isset($_POST['search']) && $_POST['specialization'] && $_POST['Region']) {
     $doctorsList = mysqli_query($connection, $query);
 }
 
-$keyword1 = $_POST['specialization'];
-$keyword2 = $_POST['Region'];
+if (isset($_POST['specialization']) ) {
+    $keyword1 = $_POST['specialization'];
+}
+
+if (isset($_POST['Region']) ) {
+    $keyword2 = $_POST['Region'];
+}
+
+if (isset($_POST['submit-book'])) {
+
+    if (!isset($_SESSION['email'])) {
+        echo '<script>alert("You need to login first. Before access this.")</script>';
+        echo "<script>window.location.href ='./views/login.php'</script>";
+    }else {
+        echo "<script>window.location.href ='./index.php'</script>";
+    }
+
+}
+
 ?>
 
 
@@ -174,9 +193,11 @@ $keyword2 = $_POST['Region'];
                                 ?>
 
                             </div>
+                            <form role="form" method="post" name="submit-book">
                             <div class="col-lg-3 col-md-4 col-6 mx-auto">
-                                <button type="submit" class="form-control" name="submit" id="submit-button">Book Now</button>
+                                <button type="submit" class="form-control" name="submit-book" id="submit-button">Book Now</button>
                             </div>
+                            </form>
                         </div>
 
 

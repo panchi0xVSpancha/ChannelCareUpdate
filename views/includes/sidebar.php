@@ -29,22 +29,33 @@
               </a>
               <ul class="dropdown-menu animated flipInY">
                 <li>
+                <?php if ($_SESSION["type"]=="doctor") {?>
                   <a class="text-color" href="dashboard.php">
                     <span class="m-r-xs"><i class="fa fa-home"></i></span>
                     <span>Home</span>
                   </a>
+                  <?php }else if ($_SESSION["type"]=="patient") { ?>
+                    <a class="text-color" href="patient-dashboard.php">
+                    <span class="m-r-xs"><i class="fa fa-home"></i></span>
+                    <span>Home</span>
+                  </a>
+                  <?php } else {?>
+                    <a class="text-color" href="admin-dashboard.php">
+                    <span class="m-r-xs"><i class="fa fa-home"></i></span>
+                    <span>Home</span>
+                  </a>
+                  <?php } ?>
+
                 </li>
+                <?php if ($_SESSION["type"]=="doctor") {?>
                 <li>
                   <a class="text-color" href="profile.php">
                     <span class="m-r-xs"><i class="fa fa-user"></i></span>
                     <span>Profile</span>
                   </a>
                 </li>
-                <li>
-                  <a class="text-color" href="change-password.php">
-                    <span class="m-r-xs"><i class="fa fa-gear"></i></span>
-                    <span>Settings</span>
-                  </a>
+                <?php } ?>
+
                 </li>
                 <li role="separator" class="divider"></li>
                 <li>
@@ -138,18 +149,7 @@
         </li>
         <?php }?>
 
-        <li>
-          <a href="search.php">
-            <i class="menu-icon zmdi zmdi-search zmdi-hc-lg"></i>
-            <span class="menu-text">Search</span>
-          </a>
-        </li>
-        <!-- <li>
-          <a href="appointment-bwdates.php">
-            <i class="menu-icon zmdi zmdi-layers zmdi-hc-lg"></i>
-            <span class="menu-text">Report</span>
-          </a>
-        </li> -->
+    
 
       </ul><!-- .app-menu -->
     </div><!-- .menubar-scroll-inner -->

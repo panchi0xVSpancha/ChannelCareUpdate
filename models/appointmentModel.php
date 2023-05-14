@@ -35,14 +35,12 @@ class appointmentModel
         return $result_set;
     }
     //update status a specific appointment by doctor
-    public static function updateSpecificAppointmentByDoctor($appointment_id, $doctor_id, $status, $remark,$appointment_time, $connection)
+    public static function updateSpecificAppointmentByDoctor($appointment_id, $doctor_id, $status, $remark,$appointment_time,$choose_appointment_date,$notification_time, $connection)
     {
         $query='';
         if ($status == 1) {
-            echo "accept kara";
-            $query = "UPDATE `appointment` SET status='{$status}',remark='{$remark}',appointment_time='{$appointment_time}',update_date=NOW() WHERE appointment_id='{$appointment_id}' AND doctor_id='{$doctor_id}'";
+            $query = "UPDATE `appointment` SET status='{$status}',remark='{$remark}',appointment_time='{$appointment_time}',choose_appointment_date='{$choose_appointment_date}',notification_time='{$notification_time}',update_date=NOW() WHERE appointment_id='{$appointment_id}' AND doctor_id='{$doctor_id}'";
         }else {
-            echo "accept kare na";
             $query = "UPDATE `appointment` SET status='{$status}',remark='{$remark}',update_date=NOW() WHERE appointment_id='{$appointment_id}' AND doctor_id='{$doctor_id}'";
         }
         

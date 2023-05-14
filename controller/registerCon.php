@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once('../includes/database.php');
 
 require_once('../models/reg_user.php');
@@ -135,79 +135,87 @@ if (isset($_POST['savePatient'])) {
 }
 // doctor registertion fiver
 if (isset($_POST['saveDoctor'])) {
-        $errors = array();
-        $errors['specialization'] = '';
-        $errors['license'] = '';
-       $errors['diploma'] = '';
-        $errors['pass'] = '';
-        $errors['state'] = 'unsucess';
-        $email = mysqli_real_escape_string($connection, $_POST['email']);
-        $first_name = mysqli_real_escape_string($connection, $_POST['first_name']);
-        $last_name = mysqli_real_escape_string($connection, $_POST['last_name']);
-        $address = mysqli_real_escape_string($connection, $_POST['address']);
-        $phone_number = mysqli_real_escape_string($connection, $_POST['phone_number']);
-        $level = mysqli_real_escape_string($connection, $_POST['level']);
-        $password = mysqli_real_escape_string($connection, $_POST['password']);
-        $confirmPassword = mysqli_real_escape_string($connection, $_POST['confirmpassword']);
-        $specialization = mysqli_real_escape_string($connection, $_POST['specialization']);
-        $license = mysqli_real_escape_string($connection, $_POST['license']);
-        $diploma = mysqli_real_escape_string($connection, $_POST['diploma']);
+
+        try {
+                $errors = array();
+                $errors['specialization'] = '';
+                $errors['license'] = '';
+                $errors['diploma'] = '';
+                $errors['pass'] = '';
+                $errors['state'] = 'unsucess';
+                $email = mysqli_real_escape_string($connection, $_POST['email']);
+                $first_name = mysqli_real_escape_string($connection, $_POST['first_name']);
+                $last_name = mysqli_real_escape_string($connection, $_POST['last_name']);
+                $address = mysqli_real_escape_string($connection, $_POST['address']);
+                $phone_number = mysqli_real_escape_string($connection, $_POST['phone_number']);
+                $password = mysqli_real_escape_string($connection, $_POST['password']);
+                $confirmPassword = mysqli_real_escape_string($connection, $_POST['confirmpassword']);
+                $specialization = mysqli_real_escape_string($connection, $_POST['specialization']);
+                $license = mysqli_real_escape_string($connection, $_POST['license']);
+                $level = 'doctor';
+                $certificate = $_FILES['certificate'];
+                $certificate_name = $certificate['name'];
+                $certificate_tmp_name = $certificate['tmp_name'];
 
 
-        ///upload image file
-
-        // $file_name=$_FILES['diploma']['name'];
-        // // $file_type=$_FILES['diploma']['type'];
-        // // $file_size=$_FILES['diploma']['size'];
-        // $temp_name=$_FILES['diploma']['tmp_name'];
-        
-        // $upload_to="../images/diploma/";
-        // $new_file_name=$email.$file_name;
-        // move_uploaded_file($temp_name,$upload_to . $new_file_name);
-        
-       // $diploma = mysqli_real_escape_string($connection, $_POST['diploma']);
+                $target_directory = 'C:/xampp/htdocs/ChannelCareUpdate/images/uploads/'; // Specify the directory to store uploaded images
+                $target_file = $target_directory . $certificate_name;
+                if (!move_uploaded_file($certificate_tmp_name, $target_file)) {
+                        throw new Exception('Failed to upload the file.');
+                    }
 
 
-        if (!isset($specialization) || strlen(trim($specialization)) < 1) {
-                $errors['specialization'] = '*Specialization required';
+
+                if (!isset($specialization) || strlen(trim($specialization)) < 1) {
+                        $errors['specialization'] = '*Specialization required';
+                }
+                if (!isset($license) || strlen(trim($license)) < 1) {
+                        $errors['license'] = '*License  required';
+                }
+
+                if (!isset($target_file) || strlen(trim($target_file)) < 1) {
+                        $errors['diploma'] = '*Diploma required';
+                }
+
+                if (empty($password || $confirmPassword)) // validation of new password
+                {
+                        $errors['pass'] = "*Password requried";
+                } elseif ((strlen(trim($password)) < 8)) {
+                        $errors['pass'] = "*Password Minimum is 8 charactor ";
+                } elseif ($password != $confirmPassword) {
+                        $errors['pass'] = "*Password must be equal";
+                } elseif (!preg_match('/[A-Z]/', $password)) {
+                        $errors['pass'] = "*Password Need least one uppercase letter";
+                } elseif (!preg_match('/[a-z]/', $password)) {
+                        $errors['pass'] = "*Password Need least one lowercase letter*";
+                } elseif (!preg_match('/[0-9]/', $password)) {
+                        $errors['pass'] = "*Password Need least one number*";
+                }
+
+                if ($errors['specialization'] == "" && $errors['license'] == "" && $errors['pass'] == "") {
+                        $token = bin2hex(random_bytes(50));
+                        $hash = sha1($password);
+                        $result = reg_user::doctorReg($email, $first_name, $last_name, $address, $phone_number, $hash, $specialization, $license, $target_file, $connection);
+                        $errors['state'] = 'sucess';
+
+                        if ($result) {
+                                echo '<script>alert("Registration Success!")</script>';
+                                header('Location:../views/login.php');
+                        } else {
+                                header('Location:../views/doctor_reg.php?email=' . $email . '&first_name=' . $first_name . '&last_name=' . $last_name . '&address=' . $address . '&phone_number=' . $phone_number . '&errSpecialization=' . $errors["specialization"] . '&errLicense=' . $errors["license"] . '&errPass=' . $errors["pass"]);
+                        }
+                } else {
+                        header('Location:../views/doctor_reg.php?email=' . $email . '&first_name=' . $first_name . '&last_name=' . $last_name . '&address=' . $address . '&phone_number=' . $phone_number . '&errSpecialization=' . $errors["specialization"] . '&errLicense=' . $errors["license"] . '&errPass=' . $errors["pass"]);
+                }
+        } catch (Exception $e) {
+                // Display the error message
+                echo 'Error: ' . $e->getMessage();
         }
-        if (!isset($license) || strlen(trim($license)) < 1) {
-                $errors['license'] = '*License  required';
-        }
-        // elseif (!preg_match('/[0-9]/', $merchant)) {
-        //         $errors['merchent'] = '*Invalid merchent Id';
-        // }
 
-        if (!isset($diploma) || strlen(trim($diploma)) < 1) {
-                $errors['diploma'] = '*Diploma  required';
-        }
 
-        if (empty($password || $confirmPassword)) // validation of new password
-        {
-                $errors['pass'] = "*Password requried";
-        } elseif ((strlen(trim($password)) < 8)) {
-                $errors['pass'] = "*Minimum is 8 charactor ";
-        } elseif ($password != $confirmPassword) {
-                $errors['pass'] = "*Password must be qual";
-        } elseif (!preg_match('/[A-Z]/', $password)) {
-                $errors['pass'] = "*Need least one uppercase letter";
-        } elseif (!preg_match('/[a-z]/', $password)) {
-                $errors['pass'] = "*Need least one lowercase letter*";
-        } elseif (!preg_match('/[0-9]/', $password)) {
-                $errors['pass'] = "*Need least one number*";
-        }
 
-        if ($errors['specialization'] == "" && $errors['license'] == "" && $errors['pass'] == "") {
-                $token = bin2hex(random_bytes(50));
-                $hash = sha1($password);
-                $result = reg_user::doctorReg($email, $first_name, $last_name, $address, $phone_number, $hash, $specialization, $license, $diploma, $connection);
-                // sendRegUser($email, $token, $level);
-                // $errors['email'] = $email;
-                // $errors['token'] = $token;
-                // $errors['level'] = $level;
-                $errors['state'] = 'sucess';
-        }
-        echo json_encode($errors);
+
+        // echo json_encode($errors);
 }
 
 ?>

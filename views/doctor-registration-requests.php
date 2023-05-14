@@ -110,11 +110,11 @@ if (!isset($_SESSION['email'])) {
 
 														<td><button type="button"
 														onclick=' if(confirm("Are you want to reject this doctor registration ?"))
-                                    window.location="../controller/adminController.php?doctorRequestCancel_id=<?php echo $row['doctor_id']; ?>"'
+                                    window.location="../controller/adminController.php?doctorRequestCancel_id=<?php echo $row['doctor_id']; ?>&&doctor_email=<?php echo $row['email']; ?>&&doctor_name=<?php echo $row['first_name']; ?>"'
 																; class="btn btn-danger">Deny</button>
 															<button type="button"
 															onclick=' if(confirm("Are you want to add this doctor to the system ?"))
-                                    window.location="../controller/adminController.php?doctorRequestAccept_id=<?php echo $row['doctor_id']; ?>"'
+                                    window.location="../controller/adminController.php?doctorRequestAccept_id=<?php echo $row['doctor_id']; ?>&&doctor_email=<?php echo $row['email']; ?>&&doctor_name=<?php echo $row['first_name']; ?>"'
 																; class="btn btn-success">Approve</button>
 														</td>
 

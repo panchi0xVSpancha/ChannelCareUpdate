@@ -3,6 +3,7 @@
 require_once('../includes/database.php');
 require_once('../models/appointmentModel.php');
 require_once('../models/doctorModel.php');
+require_once('../includes/email.php');
 
 
 session_start();
@@ -94,6 +95,7 @@ if (isset($_POST['submit_action'])) {
 
         $result_doc_availa = appointmentModel::updateSpecificAppointmentByDoctor($appointment_id, $doctor_id, $status, $remark, $new_appointment_time_doc_availa, $combineDateTime_availa, $notification_time_avail, $connection);
         if ($result_doc_availa) {
+          sentAppointmentApproveRequest($p_email,$full_name,$combineDateTime_availa,$remark);
           header('Location:../views/all-appointment.php?doc-available');
         } else {
           header('Location:../views/view-appointment-detail.php?doc-available');
@@ -121,6 +123,7 @@ if (isset($_POST['submit_action'])) {
 
       $result_already_approve = appointmentModel::updateSpecificAppointmentByDoctor($appointment_id, $doctor_id, $status, $remark, $new_appointment_time_already_approve, $combineDateTime_approve, $notification_time_approve, $connection);
       if ($result_already_approve) {
+        sentAppointmentApproveRequest($p_email,$full_name, $combineDateTime_approve,$remark);
         header('Location:../views/all-appointment.php?already_approve');
       } else {
         header('Location:../views/view-appointment-detail.php?already_approve');
@@ -130,6 +133,7 @@ if (isset($_POST['submit_action'])) {
   } else {
     $result = appointmentModel::updateSpecificAppointmentByDoctor($appointment_id, $doctor_id, $status, $remark, '', '', '', $connection);
     if ($result) {
+      sentAppointmentRejectedRequest($p_email,$full_name,$remark);
       header('Location:../views/all-appointment.php');
     } else {
       header('Location:../views/view-appointment-detail.php');
@@ -201,6 +205,26 @@ if (isset($_GET['deleteDoctorAvailableDates'])) {
   $result = doctorModel::deleteDoctorAvailableDates($dates_id, $doctor_id, $connection);
   header('Location:../views/profile.php');
 }
+
+//call the 9 hours ago event
+
+// function callNotification(){
+//   $currentTimeS=date('Y-m-d H:i:s');
+//   $currentTimeValue=strtotime($currentTimeS);
+
+//   $result_notifcation=appointmentModel::getAppointmentsForNotiification($connection);
+//   if (count( $result_notifcation)>0) {
+//    foreach ($result_notifcation as $record) {
+    
+//     if (strtotime($record['notification_time']) < $currentTimeValue ) {
+    
+//       sentAppointmentNotificationRequest($record['p_email'],$record['p_first'],$record['choose_appointment_date'],$record['d_first'].' '.$record['d_last']);
+//       $result_noti=appointmentModel::updateAppointmentinNotofication($record['appointment_id'],$connection);
+//     }
+//    }
+
+//   }
+// }
 
 
 

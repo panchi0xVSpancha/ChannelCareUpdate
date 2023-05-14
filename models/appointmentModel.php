@@ -92,7 +92,30 @@ class appointmentModel
         return $data;
     }
 
+    // GET appointments  for send notifications
+    public static function getAppointmentsForNotiification( $connection)
+    {
+        $data = array();
+        $query = "SELECT a.appointment_id,a.choose_appointment_date,a.notification_time,d.first_name as d_first,d.last_name as d_last,p.email as p_email,p.first_name as p_first
+        FROM `appointment` AS a
+        INNER JOIN doctor AS d ON a.doctor_id=d.doctor_id
+        INNER JOIN patient AS p ON a.patient_id=p.patient_id
+        WHERE status=1 AND is_notification_send=0";
+        $result_set = mysqli_query($connection, $query);
+        while ($row = mysqli_fetch_assoc($result_set)) {
+            $data[] = $row;
+        }
+        return $data;
+    }
   
+    //update appointment for send notifications
+    public static function updateAppointmentinNotofication($appointment_id, $connection)
+    {
+        $query="UPDATE `appointment` SET is_notification_send=1 WHERE appointment_id='{$appointment_id}'";
+        $result_set = mysqli_query($connection, $query);
+        return $result_set;
+    }
+
 
 }
 

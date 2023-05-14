@@ -119,7 +119,7 @@ if (!isset($_SESSION['email'])) {
 															</td>
 														<?php } ?>
 
-														<td><a href="view-appointment-detail.php?aptid=<?php echo htmlentities($row['appointment_id']); ?>&&full_name=<?php echo htmlentities($full_name); ?>&&p_email=<?php echo htmlentities($p_email); ?>&&phone=<?php echo htmlentities($phone); ?>"
+														<td><a href="view-appointment-detail.php?aptid=<?php echo htmlentities($row['appointment_id']); ?>&&full_name=<?php echo htmlentities($full_name); ?>&&p_email=<?php echo $p_email; ?>&&phone=<?php echo htmlentities($phone); ?>"
 																class="btn btn-primary">View</a></td>
 
 													</tr>

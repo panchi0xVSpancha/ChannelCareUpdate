@@ -294,8 +294,9 @@ if (isset($_POST['submit'])) {
 
                                     <div class="col-lg-6 col-12 mt-3">
                                         <div class="alert alert-info" role="alert">
-                                            2pm <span class="smallfont">&nbsp;&nbsp; time might vary depend on
-                                                appointments before you.</span>
+                                             <span class="smallfont">&nbsp;&nbsp; Exact time of the appointment can be viewed in the dashboard.
+                                            <br/> * Note:The time will be displayed after doctor accepting appointment 
+                                             </span>
                                         </div>
                                     </div>
 

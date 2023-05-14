@@ -15,9 +15,14 @@ class reg_user
     {
         $query = "INSERT INTO doctor (email,first_name,last_name,address,phone_number,password,type,specialization,license,diploma) VALUES('{$email}','{$first_name}','{$last_name}','{$address}','{$phone_number}','{$password}','doctor','{$specialization}','{$license}','{$diploma}')";
         $result_set = mysqli_query($connection, $query);
+        
+        if (!$result_set) {
+            $error_message = mysqli_error($connection);
+            throw new Exception("Query execution failed: " . $error_message);
+        }
+        
         return $result_set;
     }
-
     // check the email email already used
     public static function checkUser($email, $connection)
     {

@@ -7,10 +7,21 @@ require_once('includes/database.php');
 
 $keyword1 = null;
 $keyword2 = null;
+$search_text = null;
 
-if (isset($_POST['search']) && $_POST['specialization'] && $_POST['Region']) {
+if (isset($_POST['search']) && $_POST['specialization'] && $_POST['Region'] && $_POST['searchdata']) {
     $doctorsList = null;
-    $query = "SELECT * FROM doctor WHERE user_accepted=1 AND specialization='" . $_POST['specialization'] . "' AND region Like '%" . $_POST['Region'] . "%';";
+
+    $word = $_POST['searchdata'];
+    $id = intval($_POST['searchdata']);
+    $word .= '%';
+
+    $query = "SELECT * FROM doctor WHERE user_accepted=1 AND specialization='" . $_POST['specialization'] . "' AND region Like '%" . $_POST['Region'] . "%' AND ( email LIKE '{$word}' 
+    OR   first_name LIKE '{$word}'  
+    OR  last_name LIKE '{$word}'
+    OR   address LIKE '{$word}'
+    OR   phone_number  LIKE '{$word}'
+    OR   doctor_id LIKE $id) ";
     $doctorsList = mysqli_query($connection, $query);
 } else if (isset($_POST['search']) && $_POST['specialization']) {
     $doctorsList = null;
@@ -21,6 +32,48 @@ if (isset($_POST['search']) && $_POST['specialization'] && $_POST['Region']) {
     $doctorsList = null;
     $query = "SELECT * FROM doctor WHERE user_accepted=1 AND region Like '%" . $_POST['Region'] . "%';";
     $doctorsList = mysqli_query($connection, $query);
+} else if (isset($_POST['search']) && $_POST['searchdata']) {
+
+    $word = $_POST['searchdata'];
+    $id = intval($_POST['searchdata']);
+    $word .= '%';
+
+    $doctorsList = null;
+    $query = "SELECT * FROM doctor WHERE user_accepted =1 AND ( email LIKE '{$word}' 
+    OR   first_name LIKE '{$word}'  
+    OR  last_name LIKE '{$word}'
+    OR   address LIKE '{$word}'
+    OR   phone_number  LIKE '{$word}'
+    OR   doctor_id LIKE $id )";
+    $doctorsList = mysqli_query($connection, $query);
+} else if (isset($_POST['search']) && $_POST['searchdata'] && $_POST['Region']) {
+
+    $word = $_POST['searchdata'];
+    $id = intval($_POST['searchdata']);
+    $word .= '%';
+
+    $doctorsList = null;
+    $query = "SELECT * FROM doctor WHERE user_accepted =1 AND  region Like '%" . $_POST['Region'] . "%'  AND( email LIKE '{$word}' 
+    OR   first_name LIKE '{$word}'  
+    OR  last_name LIKE '{$word}'
+    OR   address LIKE '{$word}'
+    OR   phone_number  LIKE '{$word}'
+    OR   doctor_id LIKE $id )";
+    $doctorsList = mysqli_query($connection, $query);
+} else if (isset($_POST['search']) && $_POST['searchdata'] && $_POST['specialization']) {
+
+    $word = $_POST['searchdata'];
+    $id = intval($_POST['searchdata']);
+    $word .= '%';
+
+    $doctorsList = null;
+    $query = "SELECT * FROM doctor WHERE user_accepted =1 AND  specialization Like '%" . $_POST['specialization'] . "%' AND ( email LIKE '{$word}' 
+    OR   first_name LIKE '{$word}'  
+    OR  last_name LIKE '{$word}'
+    OR   address LIKE '{$word}'
+    OR   phone_number  LIKE '{$word}'
+    OR   doctor_id LIKE $id )";
+    $doctorsList = mysqli_query($connection, $query);
 } else {
 
     $doctorsList = null;
@@ -28,24 +81,28 @@ if (isset($_POST['search']) && $_POST['specialization'] && $_POST['Region']) {
     $doctorsList = mysqli_query($connection, $query);
 }
 
-if (isset($_POST['specialization']) ) {
+if (isset($_POST['specialization'])) {
     $keyword1 = $_POST['specialization'];
 }
 
-if (isset($_POST['Region']) ) {
+if (isset($_POST['Region'])) {
     $keyword2 = $_POST['Region'];
 }
 
-if (isset($_POST['submit-book'])) {
-
-    if (!isset($_SESSION['email'])) {
-        echo '<script>alert("You need to login first. Before access this.")</script>';
-        echo "<script>window.location.href ='./views/login.php'</script>";
-    }else {
-        echo "<script>window.location.href ='./index.php'</script>";
-    }
-
+if (isset($_POST['searchdata'])) {
+    $search_text = $_POST['searchdata'];
 }
+
+// if (isset($_POST['submit-book'])) {
+
+//     if (!isset($_SESSION['email'])) {
+//         echo '<script>alert("You need to login first. Before access this.")</script>';
+//         echo "<script>window.location.href ='./views/login.php'</script>";
+//     } else {
+//         echo "<script>window.location.href ='./index.php'</script>";
+//     }
+
+// }
 
 ?>
 
@@ -96,13 +153,15 @@ if (isset($_POST['submit-book'])) {
                     <div class="col-lg-12 col-12 mx-auto">
                         <div class="doctor_search">
 
-                            <h2 class="text-center mb-lg-3 mb-2">Search Doctors according to your region and specialization</h2>
+                            <h2 class="text-center mb-lg-3 mb-2">Search Doctors according to your region and
+                                specialization</h2>
 
                             <form role="form" method="post">
                                 <div class="row">
-                                    <div class="col-lg-4 col-6">
+                                    <div class="col-lg-3 col-6">
                                         </br>
-                                        <select onchange="" name="specialization" id="specialization" class="form-control">
+                                        <select onchange="" name="specialization" id="specialization"
+                                            class="form-control">
                                             <option value="">Select specialization</option>
                                             <option value="heart">heart</option>
                                             <option value="Orthopedics">Orthopedics</option>
@@ -116,7 +175,7 @@ if (isset($_POST['submit-book'])) {
                                             <option value="Family Medicine">Family Medicine</option>
                                         </select>
                                     </div>
-                                    <div class="col-lg-4 col-6">
+                                    <div class="col-lg-3 col-6">
                                         </br>
                                         <select onChange="" name="Region" id="Region" class="form-control">
                                             <option value="">Select Region</option>
@@ -128,34 +187,48 @@ if (isset($_POST['submit-book'])) {
                                             <option value="Zlín">Zlín Region</option>
                                         </select>
                                     </div>
-                                    <div class="col-lg-4 col-12">
-                                        <button type="submit" class="form-control" name="search" id="submit-button">Search</button>
+                                    <div class="col-lg-3 col-6">
+                                    </br>
+                                        <input id="searchdata" type="text" name="searchdata" class="form-control"
+                                            placeholder="enter text.">
+                                    </div>
+
+
+                                    <div class="col-lg-3 col-6">
+                                        <button type="submit" class="form-control" name="search"
+                                            id="submit-button">Search</button>
                                     </div>
                                 </div>
 
                             </form>
                             <div class="row justify-content-center mt-3">
                                 <?php
-                                if ($keyword1 == null && $keyword2 == null) {
-                                ?>
-                                    <div><span>key words : <?php echo "all" ?></span></div>
-                                <?php
+                                if ($keyword1 == null && $keyword2 == null && $search_text == null) {
+                                    ?>
+                                    <div><span>key words :
+                                            <?php echo "all" ?>
+                                        </span></div>
+                                    <?php
                                 } else {
-                                ?>
-                                    <div><span>key words : <?php echo " " . $keyword1 . ", " . $keyword2; ?></span></div>
-                                <?php
+                                    ?>
+                                    <div><span>key words :
+                                            <?php echo " " . $keyword1 . " " . $keyword2 . " " . $search_text; ?>
+                                        </span></div>
+                                    <?php
                                 }
                                 ?>
                                 <?php
 
                                 foreach ($doctorsList as $doctor) {
-                                ?>
+                                    ?>
 
 
                                     <div class="col-8 mt-3">
                                         <div class="card border-info mb-3">
                                             <div class="card-header">
-                                                <h5>Dr. <?php echo $doctor['first_name'] . " " . $doctor['last_name']  ?> </h5>
+                                                <h5>Dr.
+                                                    <?php echo $doctor['first_name'] . " " . $doctor['last_name'] ?>
+                                                </h5>
                                             </div>
                                             <div class="card-body text-info">
                                                 <?php
@@ -163,41 +236,65 @@ if (isset($_POST['submit-book'])) {
                                                 $availability = mysqli_query($connection, $query2);
 
                                                 if (mysqli_num_rows($availability) === 0) {
-                                                ?>
+                                                    ?>
                                                     <div class="row justify-content-center">
-                                                        <div class="col-3"><?php echo " No available days."; ?></div>
+                                                        <div class="col-3">
+                                                            <?php echo " No available days."; ?>
+                                                        </div>
                                                     </div>
                                                     <?php
                                                 } else {
                                                     foreach ($availability as $record) {
-                                                    ?>
+                                                        ?>
                                                         <div class="row justify-content-center">
-                                                            <div class="col-3"><?php echo $record['available_date'] ?></div>
-                                                            <div class="col-4"><?php echo "@" . $record['available_time'] ?></div>
+                                                            <div class="col-3">
+                                                                <?php echo $record['available_date'] ?>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <?php echo "@" . $record['available_time'] ?>
+                                                            </div>
                                                         </div>
 
-                                                <?php
+                                                        <?php
                                                     }
                                                 }
                                                 ?>
 
-                                                <?php
+                                                <form role="form" method="post" name="submit-book" action="./views/patient-booking-appointment.php">
 
-                                                ?>
+                                                    <?php if (isset($_SESSION['email']) && isset($_SESSION['type'])) { ?>
+                                                        <input type="hidden" class="form-control" placeholder="d_first_name" name="d_first_name" value="<?php echo $doctor['first_name'];?>">
+
+                                                        <input type="hidden" class="form-control" placeholder="d_last_name" name="d_last_name" value="<?php echo $doctor['last_name'];?>">
+
+                                                        <input type="hidden" class="form-control" placeholder="specialization" name="specialization" value="<?php echo $doctor['specialization'];?>">
+                                                        <input type="hidden" class="form-control" placeholder="region" name="region" value="<?php echo $doctor['region'];?>">
+                                                        <input type="hidden" class="form-control" placeholder="doctor_id" name="doctor_id" value="<?php echo $doctor['doctor_id'];?>">
+                                                        <input type="hidden" class="form-control" placeholder="email" name="email" value="<?php echo $doctor['email'];?>">
+                                                        
+                                                        <div class="col-lg-3 col-md-4 col-6 mx-auto">
+                                                            <button type="submit" class="form-control" name="submit-book"
+                                                                id="submit-button">Book Now</button>
+                                                        </div>
+                                                    <?php } ?>
+                                                </form>
                                             </div>
                                         </div>
+
+
                                     </div>
-                                <?php
+
+                                    <?php
                                 }
 
                                 ?>
 
                             </div>
-                            <form role="form" method="post" name="submit-book">
+                            <!-- <form role="form" method="post" name="submit-book">
                             <div class="col-lg-3 col-md-4 col-6 mx-auto">
                                 <button type="submit" class="form-control" name="submit-book" id="submit-button">Book Now</button>
                             </div>
-                            </form>
+                            </form> -->
                         </div>
 
 

@@ -161,7 +161,7 @@ if (isset($_POST['saveDoctor'])) {
 
 
                 $target_directory = 'C:/xampp/htdocs/ChannelCareUpdate/images/uploads/'; // Specify the directory to store uploaded images
-                $target_file = $target_directory . $certificate_name;
+                $target_file = $target_directory .$email.'-' .$certificate_name;
                 if (!move_uploaded_file($certificate_tmp_name, $target_file)) {
                         throw new Exception('Failed to upload the file.');
                     }

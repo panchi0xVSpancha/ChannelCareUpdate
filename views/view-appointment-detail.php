@@ -174,6 +174,7 @@ if (!isset($_SESSION['email'])) {
                       </p>
 
                     <?php } ?>
+
                     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                       aria-hidden="true">
                       <div class="modal-dialog" role="document">
@@ -235,6 +236,8 @@ if (!isset($_SESSION['email'])) {
                       </div>
 
                     </div>
+
+                    
 
                   </div><!-- .widget-body -->
 

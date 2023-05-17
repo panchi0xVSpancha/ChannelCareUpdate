@@ -53,13 +53,13 @@ if (isset($_POST['submit_action'])) {
   $appointment_id = $_POST['appointment_id'];
   $doctor_id = $_POST['doctor_id'];
   $appointment_date = $_POST['appointment_date'];
-  $full_name=$_POST['full_name'];
-  $p_email=$_POST['p_email'];
-  $phone=$_POST['phone'];
+  $full_name = $_POST['full_name'];
+  $p_email = $_POST['p_email'];
+  $phone = $_POST['phone'];
+
+  $originalTimeZone = new DateTimeZone('Europe/Amsterdam');
 
   $result = '';
-
-  // echo "old_appointment_time: $old_appointment_time";
 
   if ($status == 1) {
 
@@ -74,28 +74,41 @@ if (isset($_POST['submit_action'])) {
         echo "Not available time slot found";
         header("Location:../views/view-appointment-detail.php?error-available-slot&&aptid={$appointment_id}&&full_name={$full_name}&&p_email={$p_email}&&phone={$phone}");
         //need to handle notification
-     
+
       } else {
+
         $row = $filter_results[0];
         $old_appointment_time_doc_available = $row['available_time'];
 
         //add 15mins
-        $new_appointment_time_doc_availa = date('H:i A', strtotime($old_appointment_time_doc_available . ' +15 minutes'));
+        $new_appointment_time_doc_availa = date('h:i A', strtotime($old_appointment_time_doc_available . ' +15 minutes'));
 
         //combine appointement date & appointment time as choose_appointment_date
         $dateTimeString_availa = $appointment_date . '' . $new_appointment_time_doc_availa;
+
         $dateTime_availa = new DateTime($dateTimeString_availa);
-        $combineDateTime_availa = $dateTime_availa->format('Y-m-d H:i:s'); //we can use as a choose_appointment_date
+        $combineDateTime_availa = $dateTime_availa->format('Y-m-d h:i:s'); //we can use as a choose_appointment_date
+        
 
         //reduce 9 hours for send notification
         $dateTime_sub_availa = new DateTime($combineDateTime_availa);
         $interval = new DateInterval('PT9H'); // Duration to subtract (9 hours)
         $dateTime_sub_availa->sub($interval);
         $notification_time_avail = $dateTime_sub_availa->format('Y-m-d H:i:s');
+     
+        $originalTimeZone = new DateTimeZone('Europe/Amsterdam');
+        // Create a DateTime object with the current time and time zone
+        $dateTime = new DateTime($notification_time_avail, $originalTimeZone);
 
-        $result_doc_availa = appointmentModel::updateSpecificAppointmentByDoctor($appointment_id, $doctor_id, $status, $remark, $new_appointment_time_doc_availa, $combineDateTime_availa, $notification_time_avail, $connection);
+        // Format the DateTime object in the desired format
+        $notification_time = $dateTime->format('Y-m-d\TH:i:sO');
+        echo $notification_time;
+
+         $result_doc_availa = appointmentModel::updateSpecificAppointmentByDoctor($appointment_id, $doctor_id, $status, $remark, $new_appointment_time_doc_availa, $combineDateTime_availa,  $connection);
         if ($result_doc_availa) {
           sentAppointmentApproveRequest($p_email,$full_name,$combineDateTime_availa,$remark);
+          //send sms
+        //  sendSMS($combineDateTime_availa,$notification_time,$phone);
           header('Location:../views/all-appointment.php?doc-available');
         } else {
           header('Location:../views/view-appointment-detail.php?doc-available');
@@ -113,17 +126,33 @@ if (isset($_POST['submit_action'])) {
       //combine appointement date & appointment time as choose_appointment_date
       $dateTimeString_approve = $appointment_date . '' . $new_appointment_time_already_approve;
       $dateTime_approve = new DateTime($dateTimeString_approve);
-      $combineDateTime_approve = $dateTime_approve->format('Y-m-d H:i:s'); //we can use as a choose_appointment_date
+      //  echo  $dateTime_approve.'<br/>';
+      $combineDateTime_approve = $dateTime_approve->format('Y-m-d h:i:s'); //we can use as a choose_appointment_date
+  
 
       //reduce 9 hours for send notification
       $dateTime_sub_approve = new DateTime($combineDateTime_approve);
+
       $interval = new DateInterval('PT9H'); // Duration to subtract (9 hours)
       $dateTime_sub_approve->sub($interval);
-      $notification_time_approve = $dateTime_sub_approve->format('Y-m-d H:i:s');
 
-      $result_already_approve = appointmentModel::updateSpecificAppointmentByDoctor($appointment_id, $doctor_id, $status, $remark, $new_appointment_time_already_approve, $combineDateTime_approve, $notification_time_approve, $connection);
+      $notification_time_approve = $dateTime_sub_approve->format('Y-m-d h:i:s');
+    
+
+      $originalTimeZone = new DateTimeZone('Europe/Amsterdam');
+      // // Create a DateTime object with the current time and time zone
+      $dateTime = new DateTime($notification_time_approve, $originalTimeZone);
+
+      // // Format the DateTime object in the desired format
+      $notification_time = $dateTime->format('Y-m-d\TH:i:sO');
+      
+
+  
+      $result_already_approve = appointmentModel::updateSpecificAppointmentByDoctor($appointment_id, $doctor_id, $status, $remark, $new_appointment_time_already_approve, $combineDateTime_approve,  $connection);
       if ($result_already_approve) {
         sentAppointmentApproveRequest($p_email,$full_name, $combineDateTime_approve,$remark);
+        //send sms
+      //  sendSMS($combineDateTime_approve,$notification_time,$phone);
         header('Location:../views/all-appointment.php?already_approve');
       } else {
         header('Location:../views/view-appointment-detail.php?already_approve');
@@ -131,15 +160,95 @@ if (isset($_POST['submit_action'])) {
     }
 
   } else {
-    $result = appointmentModel::updateSpecificAppointmentByDoctor($appointment_id, $doctor_id, $status, $remark, '', '', '', $connection);
+    $result = appointmentModel::updateSpecificAppointmentByDoctor($appointment_id, $doctor_id, $status, $remark, '', '', $connection);
     if ($result) {
-      sentAppointmentRejectedRequest($p_email,$full_name,$remark);
+      sentAppointmentRejectedRequest($p_email, $full_name, $remark);
       header('Location:../views/all-appointment.php');
     } else {
       header('Location:../views/view-appointment-detail.php');
     }
   }
 
+}
+
+function sendSMS($appointmenttime,$notification_time, $phone)
+{
+
+  $message = 'ChannelCare reminder :
+  You have an appointment @'.$appointmenttime.' today.';
+
+  // $phone = '+420776604496';
+  // $notification_time = '2023-05-16T12:10:36+0200';
+
+  $endpoint = 'https://app.gosms.eu/oauth/v2/token';
+  $clientID = '25356_1zvk95lcaipwgcgskwgck0s4goswc4gwo8k4ssgck48kko88k';
+  $clientSecret = '68mlu2dub5cswcsosoc0w0oo4o44wkc04s88o8g0440wcwc4o4';
+
+  $queryParams = array(
+    'client_id' => $clientID,
+    'client_secret' => $clientSecret,
+    'grant_type' => 'client_credentials'
+  );
+
+  $endpointWithParams = $endpoint . '?' . http_build_query($queryParams);
+
+  $curl = curl_init($endpointWithParams);
+
+  $options = array(
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_HTTPHEADER => array(
+      'Content-Type: application/json',
+    )
+  );
+
+  curl_setopt_array($curl, $options);
+
+  $response = curl_exec($curl);
+
+  if ($response === false) {
+    $error = curl_error($curl);
+    echo "cURL Error: $error";
+  } else {
+    $responseData = json_decode($response, true);
+    echo $accessToken = $responseData['access_token'];
+
+    $apiEndpoint = 'https://app.gosms.eu/api/v1/messages';
+
+    $postData = array(
+      'message' => $message,
+      'recipients' => array($phone),
+      'channel' => 385843,
+      'expectedSendStart' => $notification_time
+    );
+
+    $curl = curl_init($apiEndpoint);
+
+    $options = array(
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_HTTPHEADER => array(
+        'Content-Type: application/json',
+        'Authorization: Bearer ' . $accessToken,
+      ),
+      CURLOPT_POST => true,
+      CURLOPT_POSTFIELDS => json_encode($postData)
+    );
+
+    curl_setopt_array($curl, $options);
+
+    $apiresponse = curl_exec($curl);
+
+    if ($response === false) {
+      $error = curl_error($curl);
+      echo "cURL Error: $error";
+    } else {
+      // Handle the response from the API
+      var_dump($response);
+    }
+    curl_close($curl);
+
+  }
+
+  curl_close($curl);
 }
 
 //get patient appointement details
@@ -215,9 +324,9 @@ if (isset($_GET['deleteDoctorAvailableDates'])) {
 //   $result_notifcation=appointmentModel::getAppointmentsForNotiification($connection);
 //   if (count( $result_notifcation)>0) {
 //    foreach ($result_notifcation as $record) {
-    
+
 //     if (strtotime($record['notification_time']) < $currentTimeValue ) {
-    
+
 //       sentAppointmentNotificationRequest($record['p_email'],$record['p_first'],$record['choose_appointment_date'],$record['d_first'].' '.$record['d_last']);
 //       $result_noti=appointmentModel::updateAppointmentinNotofication($record['appointment_id'],$connection);
 //     }

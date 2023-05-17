@@ -23,7 +23,7 @@
               <a href="javascript:void(0)" class="dropdown-toggle usertitle" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
                 <small>
-                  <?php echo $email; ?>
+                  <?php //echo $email; ?>
                 </small>
                 <span class="caret"></span>
               </a>
@@ -47,14 +47,30 @@
                   <?php } ?>
 
                 </li>
-                <?php if ($_SESSION["type"]=="doctor") {?>
+              
                 <li>
+                <?php if ($_SESSION["type"]=="doctor") {?>
                   <a class="text-color" href="profile.php">
                     <span class="m-r-xs"><i class="fa fa-user"></i></span>
                     <span>Profile</span>
                   </a>
-                </li>
+
+                  <?php }else if ($_SESSION["type"]=="patient") { ?>
+                    <a class="text-color" href="patient-profile.php">
+                    <span class="m-r-xs"><i class="fa fa-user"></i></span>
+                    <span>Profile</span>
+                  </a>
+                  <!-- <?php //} else {?>
+                    <a class="text-color" href="profile.php">
+                    <span class="m-r-xs"><i class="fa fa-user"></i></span>
+                    <span>Profile</span>
+                  </a> -->
+                   
                 <?php } ?>
+
+                </li>
+               
+
 
                 </li>
                 <li role="separator" class="divider"></li>
@@ -133,6 +149,24 @@
           <?php }?>
         
         </li>
+
+        <?php if ($_SESSION["type"]=="patient") {?>
+
+          <li>
+          <a href="patient-booking-appointment.php">
+            <i class="menu-icon zmdi zmdi-layers zmdi-hc-lg"></i>
+            <span class="menu-text">Booking</span>
+          </a>
+        </li>
+        <!-- <li>
+        <a href="patient-booking-appointment.php" class="submenu-toggle">
+            <i class="menu-icon zmdi zmdi-layers zmdi-hc-lg"></i>
+            <span class="menu-text">Booking</span>
+          </a>
+
+        </li> -->
+        <?php }?>
+
 
         <?php if ($_SESSION["type"]=="admin") {?>
         <li>

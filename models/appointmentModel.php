@@ -35,11 +35,11 @@ class appointmentModel
         return $result_set;
     }
     //update status a specific appointment by doctor
-    public static function updateSpecificAppointmentByDoctor($appointment_id, $doctor_id, $status, $remark,$appointment_time,$choose_appointment_date,$notification_time, $connection)
+    public static function updateSpecificAppointmentByDoctor($appointment_id, $doctor_id, $status, $remark,$appointment_time,$choose_appointment_date, $connection)
     {
         $query='';
         if ($status == 1) {
-            $query = "UPDATE `appointment` SET status='{$status}',remark='{$remark}',appointment_time='{$appointment_time}',choose_appointment_date='{$choose_appointment_date}',notification_time='{$notification_time}',update_date=NOW() WHERE appointment_id='{$appointment_id}' AND doctor_id='{$doctor_id}'";
+            $query = "UPDATE `appointment` SET status='{$status}',remark='{$remark}',appointment_time='{$appointment_time}',choose_appointment_date='{$choose_appointment_date}',update_date=NOW() WHERE appointment_id='{$appointment_id}' AND doctor_id='{$doctor_id}'";
         }else {
             $query = "UPDATE `appointment` SET status='{$status}',remark='{$remark}',update_date=NOW() WHERE appointment_id='{$appointment_id}' AND doctor_id='{$doctor_id}'";
         }
@@ -92,22 +92,7 @@ class appointmentModel
         return $data;
     }
 
-    // GET appointments  for send notifications
-    public static function getAppointmentsForNotiification( $connection)
-    {
-        $data = array();
-        $query = "SELECT a.appointment_id,a.choose_appointment_date,a.notification_time,d.first_name as d_first,d.last_name as d_last,p.email as p_email,p.first_name as p_first
-        FROM `appointment` AS a
-        INNER JOIN doctor AS d ON a.doctor_id=d.doctor_id
-        INNER JOIN patient AS p ON a.patient_id=p.patient_id
-        WHERE status=1 AND is_notification_send=0";
-        $result_set = mysqli_query($connection, $query);
-        while ($row = mysqli_fetch_assoc($result_set)) {
-            $data[] = $row;
-        }
-        return $data;
-    }
-  
+
     //update appointment for send notifications
     public static function updateAppointmentinNotofication($appointment_id, $connection)
     {
